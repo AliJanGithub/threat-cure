@@ -51,7 +51,7 @@ export default function Navigation() {
           <Link href={"/signup"}>Sign Up</Link>
             </button>
             <button className="bg-white border border-[#ff6b35] text-[#ff6b35] px-5 py-2 rounded-xl hover:bg-[#ff6b35] hover:text-white transition-all shadow-sm">
-              Demo
+         <Link href={"/demo"}>Demo</Link>
             </button>
           </div>
 
