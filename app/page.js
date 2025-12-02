@@ -9,17 +9,22 @@ import ContactSection from '../components/ContactSection';
 import Footer from '../components/Footer';
 import TrustedPartnersSlider from '../components/TrustedPartnersSlider';
 import Projects from '../components/Projects';
+import DetailedProjects from '../components/DetailedProjects';
 
 export default function App() {
   return (
     <div className="min-h-screen bg-white">
       <Navigation />
-      <TrustedPartnersSlider/>
+      
       <HeroSection />
+      <br/>
       <ServicesSection />
       <WhyUsSection />
-      <Projects/>
+      {/* <Projects/> */}
+      <DetailedProjects/>
+      <TrustedPartnersSlider/>
       <CaseStudiesSection />
+
       <TestimonialsSection />
       <ResourcesSection />
       <ContactSection />

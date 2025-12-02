@@ -4,6 +4,8 @@ import React from 'react'
 import ServicesSection from '../../components/ServicesSection'
 import WhyUsSection from '../../components/WhyUsSection'
 import Footer from '../../components/Footer'
+import Projects from '../../components/Projects'
+import DetailedProjects from '../../components/DetailedProjects'
 
 export default function page() {
   return (
@@ -11,8 +13,10 @@ export default function page() {
    
     <Navigation/>
      <TrustedPartnersSlider/>
-      <ServicesSection />
-        <WhyUsSection />
+     <DetailedProjects/>
+     {/* <Projects/> */}
+      {/* <ServicesSection />
+        <WhyUsSection /> */}
         <Footer/>
       </>
   )

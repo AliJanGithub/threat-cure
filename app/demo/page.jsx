@@ -1,8 +1,9 @@
 "use client";
 
-import { useRouter } from "next/navigation";
+import { useRouter,useSearchParams } from "next/navigation";
 import { useState, useEffect, useRef } from "react";
 import { Check, Shield, Sparkles, ArrowRight } from "lucide-react";
+
 
 export default function Demo() {
   const router = useRouter();
@@ -33,7 +34,7 @@ export default function Demo() {
     };
   }, []); // Empty dependency array means this runs once on mount
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async(e) => {
     e.preventDefault();
     
     if (!fullName || !email || !interest) {
@@ -46,16 +47,26 @@ export default function Demo() {
       return;
     }
 
+
+
+    const data={
+      fullName,
+      email,
+      interest
+    }
+    const query=new URLSearchParams(data).toString()
+
     setIsSubmitting(true);
     
     // Simulate API call
+   
     const submitTimer = setTimeout(() => {
       setIsSubmitting(false);
       setIsSubmitted(true);
       
       const successTimer = setTimeout(() => {
         // Navigate to success page
-        router.push("/demo/success");
+        router.push(`/demo/success?${query}`);
       }, 1000);
 
       return () => clearTimeout(successTimer);
@@ -160,9 +171,9 @@ export default function Demo() {
                 <option value="" disabled>
                   Select an option
                 </option>
-                <option value="security">Security</option>
-                <option value="devops">DevOps</option>
-                <option value="development">Development</option>
+                <option value="Services">Services</option>
+                <option value="Solutions">Solutions</option>
+                <option value="Development">Development</option>
               </select>
               <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
                 <ArrowRight className="w-5 h-5 text-gray-400 rotate-90" />
