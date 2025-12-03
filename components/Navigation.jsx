@@ -12,7 +12,7 @@ export default function Navigation() {
     { name: "Home", href: "/" },
     { name: "Solutions", href: "/solutions" },
     { name: "Services", href: "/services" },
-    { name: "Partner Net", href: "/partner-net" },
+    // { name: "Partner Net", href: "/partner-net" },
     { name: "Contact", href: "/contact" },
     { name: "Blogs", href: "/blogs" },
   ];
@@ -45,11 +45,11 @@ export default function Navigation() {
           {/* CTA Buttons */}
           <div className="hidden md:flex items-center gap-3">
             <button className="border border-[#ff6b35] text-[#ff6b35] px-5 py-2 rounded-xl hover:bg-[#ff6b35] hover:text-white transition-all shadow-sm">
-              <Link href={"/signin"}>Sign In</Link>
+              <Link href={"/partner-net"}>Partner Net</Link>
             </button>
-            <button className="bg-[#ff6b35] text-white px-6 py-2 rounded-xl hover:bg-[#ff5722] transition-all shadow-md">
+            {/* <button className="bg-[#ff6b35] text-white px-6 py-2 rounded-xl hover:bg-[#ff5722] transition-all shadow-md">
           <Link href={"/signup"}>Sign Up</Link>
-            </button>
+            </button> */}
             <button className="bg-white border border-[#ff6b35] text-[#ff6b35] px-5 py-2 rounded-xl hover:bg-[#ff6b35] hover:text-white transition-all shadow-sm">
          <Link href={"/demo"}>Demo</Link>
             </button>

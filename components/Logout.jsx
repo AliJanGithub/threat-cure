@@ -1,0 +1,48 @@
+"use client";
+
+import { useRouter } from "next/navigation";
+import { LogOut } from "lucide-react";
+import { useState } from "react";
+
+export default function LogoutButton() {
+  const router = useRouter();
+  const [loading, setLoading] = useState(false);
+
+  const handleLogout = async () => {
+    if (!confirm("Are you sure you want to logout?")) return;
+    
+    setLoading(true);
+    
+    try {
+      const response = await fetch("/api/logout", {
+        method: "POST",
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        // Force a hard reload to clear any client-side state
+        router.push("/partner-net");
+        router.refresh(); // Refresh to update middleware state
+      } else {
+        alert("Logout failed. Please try again.");
+      }
+    } catch (error) {
+      console.error("Logout error:", error);
+      alert("Logout failed. Please try again.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <button
+      onClick={handleLogout}
+      disabled={loading}
+      className="flex items-center gap-2 px-4 py-2 bg-red-500 hover:bg-red-600 text-white rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+    >
+      <LogOut size={18} />
+      {loading ? "Logging out..." : "Logout"}
+    </button>
+  );
+}

@@ -56,7 +56,7 @@ export default function SignInPage() {
         <form className="flex flex-col gap-5">
           <input
             type="text"
-            placeholder="Name"
+            placeholder="Partner Net Id"
             className="p-3 rounded-lg bg-white/10 text-white outline-none border border-white/20 placeholder-gray-300 focus:border-orange-400 transition-colors"
           />
 
@@ -66,18 +66,18 @@ export default function SignInPage() {
             className="p-3 rounded-lg bg-white/10 text-white outline-none border border-white/20 placeholder-gray-300 focus:border-orange-400 transition-colors"
           />
 
-          <input
+          {/* <input
             type="password"
             placeholder="Password"
             className="p-3 rounded-lg bg-white/10 text-white outline-none border border-white/20 placeholder-gray-300 focus:border-orange-400 transition-colors"
-          />
+          /> */}
 
           {/* Confirm Password */}
-          <input
+          {/* <input
             type="password"
             placeholder="Confirm Password"
             className="p-3 rounded-lg bg-white/10 text-white outline-none border border-white/20 placeholder-gray-300 focus:border-orange-400 transition-colors"
-          />
+          /> */}
 
           {/* Terms Checkbox */}
           <label className="flex items-center gap-3 text-gray-300 text-sm">
