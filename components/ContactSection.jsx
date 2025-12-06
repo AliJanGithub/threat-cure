@@ -565,7 +565,7 @@
 // }
 "use client";
 
-import { useState, useEffect, useRef } from 'react';
+import { useState } from 'react';
 import { MapPin, Phone, Mail, Send, Clock, Globe, Building, Sparkles, Shield, ArrowRight, ExternalLink } from 'lucide-react';
 
 export default function ContactSection() {
@@ -579,44 +579,25 @@ export default function ContactSection() {
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
-  const [mounted, setMounted] = useState(false);
 
-  
   const OFFICE_ADDRESS = {
-    street: 'KFC street',
+    street: '.',
     city: 'Karachi',
     state: 'Sindh',
-    zip: '94105',
+    zip: 'R111 Block 7 University Road Gulistan-e-Johar',
     country: 'Pakistan',
     formatted: 'R111 Block 7 University Road Gulistan-e-Johar',
     coordinates: '24.936031,67.1492713' 
   };
 
-  
-  const STATIC_MAP_URL = `https://maps.googleapis.com/maps/api/staticmap?
-    center=${OFFICE_ADDRESS.coordinates}&
-    zoom=15&
-    size=600x400&
-    scale=2&
-    markers=color:red%7C${OFFICE_ADDRESS.coordinates}&
-    key=YOUR_API_KEY_HERE`.replace(/\s/g, '');
-
- 
-  const MAP_PLACEHOLDER = `https://api.mapbox.com/styles/v1/mapbox/streets-v11/static/
-    pin-s+ff6b35(${OFFICE_ADDRESS.coordinates})/
-    ${OFFICE_ADDRESS.coordinates},15,0,0/600x400?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4M29iazA2Z2gycXA4N2pmbDZmangifQ.-g_vE53SD2WrJ6tFX7QHmA`.replace(/\s/g, '');
-
   const contactInfo = {
     phone: '+92-(021)-34025367',
+    usaPhone: '+1-(734)-6371042',
+    usaPhone2: '+1-(734)-2186219',
     email: 'info@threatcure.net',
     support: 'info@threatcure.net',
     hours: 'Monday - Saturday: 9:00 AM - 6:00 PM PST'
   };
-
-  useEffect(() => {
-    const timer = setTimeout(() => setMounted(true), 100);
-    return () => clearTimeout(timer);
-  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -652,22 +633,22 @@ export default function ContactSection() {
 
   return (
     <section id="contact" className="relative py-24 bg-gradient-to-b from-white to-orange-50 overflow-hidden">
-      {/* Animated Background Elements */}
+      {/* Static background elements - no animations */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-0 left-1/4 w-96 h-96 bg-orange-100 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-float"></div>
-        <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-orange-200 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-float delay-1000"></div>
+        <div className="absolute top-0 left-1/4 w-96 h-96 bg-orange-100 rounded-full mix-blend-multiply filter blur-3xl opacity-20"></div>
+        <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-orange-200 rounded-full mix-blend-multiply filter blur-3xl opacity-20"></div>
       </div>
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Section Header */}
-        <div className={`text-center mb-16 transition-all duration-1000 ${mounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-          <div className="inline-flex items-center gap-2 bg-gradient-to-r from-orange-500 to-orange-600 text-white px-4 py-2 rounded-full text-sm font-semibold mb-6 animate-pulse-subtle">
+        {/* Section Header - No transition classes */}
+        <div className="text-center mb-16">
+          <div className="inline-flex items-center gap-2 bg-gradient-to-r from-orange-500 to-orange-600 text-white px-4 py-2 rounded-full text-sm font-semibold mb-6">
             <Sparkles className="w-4 h-4" />
             Get in Touch
             <Sparkles className="w-4 h-4" />
           </div>
           
-          <h2 className="text-5xl md:text-6xl font-black mb-6 bg-gradient-to-r from-black via-black to-orange-600 bg-clip-text text-transparent animate-gradient-x">
+          <h2 className="text-5xl md:text-6xl font-black mb-6 bg-gradient-to-r from-black via-black to-orange-600 bg-clip-text text-transparent">
             Contact <span className="text-orange-600">Our Team</span>
           </h2>
           
@@ -676,8 +657,8 @@ export default function ContactSection() {
           </p>
         </div>
 
-        <div className={`grid lg:grid-cols-2 gap-12 transition-all duration-1000 delay-300 ${mounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-          {/* Contact Form (same as before) */}
+        <div className="grid lg:grid-cols-2 gap-12">
+          {/* Contact Form */}
           <div className="bg-gradient-to-br from-white to-gray-50 rounded-3xl p-8 shadow-2xl border border-gray-200/50 backdrop-blur-sm">
             <h3 className="text-2xl font-bold text-gray-900 mb-2">Send us a message</h3>
             <p className="text-gray-600 mb-8">Fill out the form and our team will get back to you within 24 hours</p>
@@ -693,7 +674,7 @@ export default function ContactSection() {
                     placeholder="John Doe"
                     value={formData.name}
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                    className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-300 hover:border-orange-400"
+                    className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent hover:border-orange-400"
                     required
                   />
                 </div>
@@ -707,7 +688,7 @@ export default function ContactSection() {
                     placeholder="john@company.com"
                     value={formData.email}
                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                    className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-300 hover:border-orange-400"
+                    className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent hover:border-orange-400"
                     required
                   />
                 </div>
@@ -723,7 +704,7 @@ export default function ContactSection() {
                     placeholder="Your Company"
                     value={formData.company}
                     onChange={(e) => setFormData({ ...formData, company: e.target.value })}
-                    className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-300 hover:border-orange-400"
+                    className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent hover:border-orange-400"
                   />
                 </div>
 
@@ -736,7 +717,7 @@ export default function ContactSection() {
                     placeholder="+1 (555) 123-4567"
                     value={formData.phone}
                     onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                    className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-300 hover:border-orange-400"
+                    className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent hover:border-orange-400"
                   />
                 </div>
               </div>
@@ -750,7 +731,7 @@ export default function ContactSection() {
                   value={formData.message}
                   onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                   rows={5}
-                  className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-300 hover:border-orange-400 resize-none"
+                  className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent hover:border-orange-400 resize-none"
                   required
                 />
               </div>
@@ -760,11 +741,11 @@ export default function ContactSection() {
                   type="submit"
                   disabled={isSubmitting || isSubmitted}
                   className={`group relative overflow-hidden flex-1 py-4 rounded-xl font-semibold text-lg shadow-xl 
-                    transition-all duration-500 hover:shadow-2xl ${isSubmitting || isSubmitted ? 'cursor-not-allowed' : 'hover:-translate-y-1'}
+                    ${isSubmitting || isSubmitted ? 'cursor-not-allowed' : 'hover:-translate-y-1 hover:shadow-2xl'}
                     ${isSubmitted ? 'bg-gradient-to-r from-green-500 to-green-600 text-white' : 'bg-gradient-to-r from-orange-500 to-orange-600 text-white'}
                   `}
                 >
-                  <span className="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></span>
+                  <span className="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent -translate-x-full group-hover:translate-x-full"></span>
                   
                   <span className="relative z-10 flex items-center justify-center gap-3">
                     {isSubmitting ? (
@@ -781,7 +762,7 @@ export default function ContactSection() {
                       <>
                         <Send className="w-5 h-5" />
                         Send Message
-                        <ArrowRight className="w-5 h-5 group-hover:translate-x-2 transition-transform duration-300" />
+                        <ArrowRight className="w-5 h-5 group-hover:translate-x-2" />
                       </>
                     )}
                   </span>
@@ -792,12 +773,12 @@ export default function ContactSection() {
 
           {/* Contact Information & Map */}
           <div className="space-y-8">
-            {/* Contact Cards (same as before) */}
+            {/* Contact Cards */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
               {/* Address Card */}
-              <div className="bg-gradient-to-br from-white to-gray-50 rounded-2xl p-6 border border-gray-200 shadow-lg hover:shadow-xl transition-all duration-500 group hover:-translate-y-1">
+              <div className="bg-gradient-to-br from-white to-gray-50 rounded-2xl p-6 border border-gray-200 shadow-lg hover:shadow-xl group hover:-translate-y-1">
                 <div className="flex items-start gap-4">
-                  <div className="p-3 rounded-xl bg-gradient-to-br from-orange-500 to-orange-600 shadow-lg group-hover:scale-110 transition-transform duration-500">
+                  <div className="p-3 rounded-xl bg-gradient-to-br from-orange-500 to-orange-600 shadow-lg group-hover:scale-110">
                     <MapPin className="w-6 h-6 text-white" />
                   </div>
                   <div>
@@ -809,7 +790,7 @@ export default function ContactSection() {
                     </p>
                     <button
                       onClick={handleGetDirections}
-                      className="text-sm text-orange-600 font-semibold hover:text-orange-700 transition-colors duration-300 flex items-center gap-1"
+                      className="text-sm text-orange-600 font-semibold hover:text-orange-700 flex items-center gap-1"
                     >
                       Get Directions
                       <ArrowRight className="w-4 h-4" />
@@ -819,14 +800,17 @@ export default function ContactSection() {
               </div>
 
               {/* Phone Card */}
-              <div className="bg-gradient-to-br from-white to-gray-50 rounded-2xl p-6 border border-gray-200 shadow-lg hover:shadow-xl transition-all duration-500 group hover:-translate-y-1">
+              <div className="bg-gradient-to-br from-white to-gray-50 rounded-2xl p-6 border border-gray-200 shadow-lg hover:shadow-xl group hover:-translate-y-1">
                 <div className="flex items-start gap-4">
-                  <div className="p-3 rounded-xl bg-gradient-to-br from-black to-gray-800 shadow-lg group-hover:scale-110 transition-transform duration-500">
+                  <div className="p-3 rounded-xl bg-gradient-to-br from-black to-gray-800 shadow-lg group-hover:scale-110">
                     <Phone className="w-6 h-6 text-white" />
                   </div>
                   <div>
                     <p className="font-bold text-gray-900 mb-1">Call Us</p>
                     <p className="text-sm text-gray-600 mb-3">{contactInfo.phone}</p>
+                    <p className="font-bold text-gray-900 mb-1">USA</p>
+                    <p className="text-sm text-gray-600 mb-3">{contactInfo.usaPhone}</p>
+                    <p className="text-sm text-gray-600 mb-3">{contactInfo.usaPhone2}</p>
                     <div className="flex items-center gap-2 text-sm text-gray-500">
                       <Clock className="w-4 h-4" />
                       {contactInfo.hours}
@@ -836,9 +820,9 @@ export default function ContactSection() {
               </div>
 
               {/* Email Card */}
-              <div className="bg-gradient-to-br from-white to-gray-50 rounded-2xl p-6 border border-gray-200 shadow-lg hover:shadow-xl transition-all duration-500 group hover:-translate-y-1">
+              <div className="bg-gradient-to-br from-white to-gray-50 rounded-2xl p-6 border border-gray-200 shadow-lg hover:shadow-xl group hover:-translate-y-1">
                 <div className="flex items-start gap-4">
-                  <div className="p-3 rounded-xl bg-gradient-to-br from-orange-600 to-orange-700 shadow-lg group-hover:scale-110 transition-transform duration-500">
+                  <div className="p-3 rounded-xl bg-gradient-to-br from-orange-600 to-orange-700 shadow-lg group-hover:scale-110">
                     <Mail className="w-6 h-6 text-white" />
                   </div>
                   <div>
@@ -854,9 +838,9 @@ export default function ContactSection() {
               </div>
 
               {/* Global Card */}
-              <div className="bg-gradient-to-br from-white to-gray-50 rounded-2xl p-6 border border-gray-200 shadow-lg hover:shadow-xl transition-all duration-500 group hover:-translate-y-1">
+              <div className="bg-gradient-to-br from-white to-gray-50 rounded-2xl p-6 border border-gray-200 shadow-lg hover:shadow-xl group hover:-translate-y-1">
                 <div className="flex items-start gap-4">
-                  <div className="p-3 rounded-xl bg-gradient-to-br from-gray-900 to-black shadow-lg group-hover:scale-110 transition-transform duration-500">
+                  <div className="p-3 rounded-xl bg-gradient-to-br from-gray-900 to-black shadow-lg group-hover:scale-110">
                     <Globe className="w-6 h-6 text-white" />
                   </div>
                   <div>
@@ -875,14 +859,14 @@ export default function ContactSection() {
             <div className="relative rounded-2xl overflow-hidden shadow-2xl border border-gray-300 group">
               {/* Map Image */}
               <div className="relative w-full h-80 bg-gradient-to-br from-orange-50 to-white overflow-hidden">
-                {/* Placeholder Map - Replace with actual static map or keep as is */}
+                {/* Placeholder Map */}
                 <div className="absolute inset-0 bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center">
                   <div className="text-center p-8">
                     <div className="relative mb-4">
                       <div className="w-20 h-20 mx-auto bg-gradient-to-br from-orange-500 to-orange-600 rounded-full flex items-center justify-center shadow-2xl">
                         <MapPin className="w-10 h-10 text-white" />
                       </div>
-                      <div className="absolute -top-2 -right-2 w-8 h-8 bg-red-500 rounded-full animate-pulse border-2 border-white"></div>
+                      <div className="absolute -top-2 -right-2 w-8 h-8 bg-red-500 rounded-full border-2 border-white animate-pulse"></div>
                     </div>
                     <h4 className="text-lg font-semibold text-gray-900 mb-2">ThreatCure Headquarters</h4>
                     <p className="text-gray-600 text-sm mb-6 max-w-xs mx-auto">
@@ -891,18 +875,12 @@ export default function ContactSection() {
                   </div>
                 </div>
 
-                {/* Animated map grid overlay */}
-                <div className="absolute inset-0 opacity-10">
-                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-orange-500 to-transparent animate-pulse" style={{ animationDuration: '3s' }}></div>
-                </div>
-
                 {/* Location Marker */}
                 <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
                   <div className="relative">
-                    <div className="w-12 h-12 bg-gradient-to-br from-orange-500 to-orange-600 rounded-full flex items-center justify-center shadow-2xl animate-bounce">
+                    <div className="w-12 h-12 bg-gradient-to-br from-orange-500 to-orange-600 rounded-full flex items-center justify-center shadow-2xl">
                       <MapPin className="w-6 h-6 text-white" />
                     </div>
-                    <div className="absolute inset-0 border-2 border-orange-300 rounded-full animate-ping opacity-50"></div>
                   </div>
                 </div>
 
@@ -916,15 +894,15 @@ export default function ContactSection() {
               <div className="absolute top-4 right-4 flex gap-2">
                 <button
                   onClick={handleGetDirections}
-                  className="group relative px-4 py-2 bg-gradient-to-r from-orange-500 to-orange-600 text-white rounded-lg text-sm font-semibold shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 flex items-center gap-2 backdrop-blur-sm overflow-hidden"
+                  className="group relative px-4 py-2 bg-gradient-to-r from-orange-500 to-orange-600 text-white rounded-lg text-sm font-semibold shadow-lg hover:shadow-xl hover:-translate-y-1 flex items-center gap-2 backdrop-blur-sm overflow-hidden"
                 >
-                  <span className="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-500"></span>
+                  <span className="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent -translate-x-full group-hover:translate-x-full"></span>
                   <ArrowRight className="w-4 h-4 relative z-10" />
                   <span className="relative z-10">Get Directions</span>
                 </button>
                 <button
                   onClick={handleViewOnMaps}
-                  className="group relative px-4 py-2 bg-white text-gray-900 rounded-lg text-sm font-semibold shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 flex items-center gap-2 backdrop-blur-sm overflow-hidden"
+                  className="group relative px-4 py-2 bg-white text-gray-900 rounded-lg text-sm font-semibold shadow-lg hover:shadow-xl hover:-translate-y-1 flex items-center gap-2 backdrop-blur-sm overflow-hidden"
                 >
                   <ExternalLink className="w-4 h-4" />
                   Open Maps
@@ -935,7 +913,7 @@ export default function ContactSection() {
               <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-4">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-3">
-                    <div className="w-3 h-3 bg-orange-500 rounded-full animate-pulse"></div>
+                    <div className="w-3 h-3 bg-orange-500 rounded-full"></div>
                     <div>
                       <p className="text-white text-sm font-semibold">You are here</p>
                       <p className="text-white/80 text-xs">Click buttons above for navigation</p>
@@ -943,7 +921,7 @@ export default function ContactSection() {
                   </div>
                   <button
                     onClick={handleGetDirections}
-                    className="text-white/80 hover:text-white text-xs transition-colors duration-300"
+                    className="text-white/80 hover:text-white text-xs"
                   >
                     Need help finding us?
                   </button>
@@ -954,7 +932,7 @@ export default function ContactSection() {
         </div>
 
         {/* Additional Info */}
-        <div className={`mt-16 grid md:grid-cols-3 gap-8 text-center transition-all duration-1000 delay-500 ${mounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+        <div className="mt-16 grid md:grid-cols-3 gap-8 text-center">
           <div className="bg-white rounded-2xl p-6 shadow-lg border border-gray-200">
             <div className="text-3xl font-black text-orange-600 mb-2">24h</div>
             <div className="font-semibold text-gray-900 mb-2">Response Time</div>
@@ -973,61 +951,7 @@ export default function ContactSection() {
         </div>
       </div>
 
-      {/* Custom Animations */}
-      <style jsx>{`
-        @keyframes float {
-          0%, 100% { transform: translateY(0px); }
-          50% { transform: translateY(-20px); }
-        }
-        
-        @keyframes gradient-x {
-          0%, 100% { background-position: 0% 50%; }
-          50% { background-position: 100% 50%; }
-        }
-        
-        @keyframes spin {
-          to { transform: rotate(360deg); }
-        }
-        
-        @keyframes pulse-subtle {
-          0%, 100% { opacity: 1; }
-          50% { opacity: 0.8; }
-        }
-        
-        @keyframes bounce {
-          0%, 100% { transform: translateY(0); }
-          50% { transform: translateY(-10px); }
-        }
-        
-        @keyframes ping {
-          75%, 100% { transform: scale(2); opacity: 0; }
-        }
-        
-        .animate-float {
-          animation: float 6s ease-in-out infinite;
-        }
-        
-        .animate-gradient-x {
-          background-size: 200% auto;
-          animation: gradient-x 3s ease infinite;
-        }
-        
-        .animate-spin {
-          animation: spin 1s linear infinite;
-        }
-        
-        .animate-pulse-subtle {
-          animation: pulse-subtle 2s ease-in-out infinite;
-        }
-        
-        .animate-bounce {
-          animation: bounce 2s ease-in-out infinite;
-        }
-        
-        .animate-ping {
-          animation: ping 2s cubic-bezier(0, 0, 0.2, 1) infinite;
-        }
-      `}</style>
+      {/* Remove all custom animations from style tag */}
     </section>
   );
 }

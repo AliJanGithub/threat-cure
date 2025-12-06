@@ -1,6 +1,7 @@
 "use client";
 
 import { Shield, Menu } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 
@@ -23,10 +24,10 @@ export default function Navigation() {
         <div className="flex items-center justify-between">
           {/* Logo */}
           <div className="flex items-center gap-3">
-            <div className="bg-[#ff6b35] rounded-xl p-2 flex items-center justify-center shadow-sm">
-              <Shield className="w-6 h-6 text-white" />
+            <div className="bg-white rounded-xl p-2 flex items-center justify-center ">
+              <Image alt="logo" src={"/logo.png"} width={120} height={50} />
             </div>
-            <span className="text-xl font-bold text-gray-900">ThreatCure</span>
+            {/* <span className="text-xl font-bold text-gray-900">ThreatCure</span> */}
           </div>
 
           {/* Desktop Navigation */}

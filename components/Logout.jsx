@@ -3,6 +3,7 @@
 import { useRouter } from "next/navigation";
 import { LogOut } from "lucide-react";
 import { useState } from "react";
+import { logout } from "@/lib/auth";
 
 export default function LogoutButton() {
   const router = useRouter();
@@ -14,19 +15,9 @@ export default function LogoutButton() {
     setLoading(true);
     
     try {
-      const response = await fetch("/api/logout", {
-        method: "POST",
-      });
-
-      const data = await response.json();
-
-      if (data.success) {
-        // Force a hard reload to clear any client-side state
-        router.push("/partner-net");
-        router.refresh(); // Refresh to update middleware state
-      } else {
-        alert("Logout failed. Please try again.");
-      }
+      await logout();
+      router.push("/partner-net");
+      router.refresh();
     } catch (error) {
       console.error("Logout error:", error);
       alert("Logout failed. Please try again.");

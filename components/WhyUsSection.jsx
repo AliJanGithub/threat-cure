@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import { Eye, Brain, Zap, Users, Shield, Clock, Target, Award, BarChart, TrendingUp, Sparkles, CheckCircle, ArrowRight, Globe, Lock } from 'lucide-react';
+import Link from "next/link";
 
 export default function WhyUsSection() {
   const [mounted, setMounted] = useState(false);
@@ -19,7 +20,7 @@ export default function WhyUsSection() {
     {
       icon: Eye,
       title: '24/7 Proactive Monitoring',
-      description: 'Round-the-clock surveillance with AI-powered threat detection and instant alerting systems.',
+      description: 'Our dedicated support team is available around the clock, ensuring that any concerns or incidents are addressed promptly and efficiently.',
       details: [
         'Real-time network monitoring',
         'AI-powered anomaly detection',
@@ -31,8 +32,8 @@ export default function WhyUsSection() {
     },
     {
       icon: Brain,
-      title: 'AI-Powered Threat Intelligence',
-      description: 'Advanced machine learning algorithms that identify anomalies and predict threats before they impact your business.',
+      title: 'Industry-Leading Expertise',
+      description: 'Our team comprises cybersecurity veterans with decades of combined experience, ensuring that your digital assets are protected by the best in the business.',
       details: [
         'Predictive threat analysis',
         'Behavioral analytics',
@@ -44,8 +45,8 @@ export default function WhyUsSection() {
     },
     {
       icon: Zap,
-      title: 'Rapid Incident Response',
-      description: 'Industry-leading response times with automated containment and expert-led remediation.',
+      title: 'Cutting-Edge Technology',
+      description: 'We utilize the latest advancements in cybersecurity technology, ensuring that our clients are always one step ahead of potential threats.',
       details: [
         '<5 minute average response',
         'Automated containment protocols',
@@ -57,8 +58,8 @@ export default function WhyUsSection() {
     },
     {
       icon: Users,
-      title: 'Expert Security Team',
-      description: 'Certified security professionals with decades of experience protecting global enterprises.',
+      title: 'Tailored Solutions',
+      description: 'At ThreatCure, we understand that every business is unique. We offer customized security solutions that cater specifically to your organizations needs.',
       details: [
         'CISSP certified analysts',
         'Industry-specific expertise',
@@ -70,8 +71,8 @@ export default function WhyUsSection() {
     },
     {
       icon: Globe,
-      title: 'Global Threat Coverage',
-      description: 'Comprehensive threat intelligence from global sources with localized protection strategies.',
+      title: 'Proactive Threat Intelligence',
+      description: 'Our advanced threat intelligence systems continuously monitor the digital landscape, identifying potential vulnerabilities before they can be exploited.',
       details: [
         'Global threat intelligence',
         'Regional threat monitoring',
@@ -83,8 +84,8 @@ export default function WhyUsSection() {
     },
     {
       icon: Lock,
-      title: 'Compliance Assurance',
-      description: 'Ensuring your organization meets all regulatory requirements across global standards.',
+      title: 'Comprehensive Training',
+      description: 'Beyond just providing security solutions, we empower our clients with the knowledge and training they need to maintain a secure digital environment.',
       details: [
         'Automated compliance checks',
         'Audit trail management',
@@ -114,9 +115,9 @@ export default function WhyUsSection() {
     <section ref={containerRef} className="relative py-24 bg-gradient-to-b from-white to-orange-50 overflow-hidden">
       {/* Animated Background Elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-0 right-1/4 w-96 h-96 bg-orange-200 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-float"></div>
-        <div className="absolute bottom-0 left-1/4 w-96 h-96 bg-orange-100 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-float delay-1000"></div>
-        <div className="absolute top-1/3 left-1/3 w-64 h-64 bg-black/5 rounded-full mix-blend-multiply filter blur-2xl opacity-10 animate-float delay-1500"></div>
+        <div className="absolute top-0 right-1/4 w-96 h-96 bg-orange-200 rounded-full mix-blend-multiply filter blur-3xl opacity-20"></div>
+        <div className="absolute bottom-0 left-1/4 w-96 h-96 bg-orange-100 rounded-full mix-blend-multiply filter blur-3xl opacity-20"></div>
+        <div className="absolute top-1/3 left-1/3 w-64 h-64 bg-black/5 rounded-full mix-blend-multiply filter blur-2xl opacity-10"></div>
       </div>
 
       {/* Floating Security Icons */}
@@ -124,12 +125,10 @@ export default function WhyUsSection() {
         {[Shield, Lock, Target, Brain].map((Icon, i) => (
           <div
             key={i}
-            className="absolute opacity-5 animate-float"
+            className="absolute opacity-5"
             style={{
               left: `${15 + i * 20}%`,
               top: `${20 + i * 15}%`,
-              animationDelay: `${i * 1.5}s`,
-              animationDuration: '8s'
             }}
           >
             <Icon className="w-24 h-24 text-orange-400" />
@@ -139,15 +138,16 @@ export default function WhyUsSection() {
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
-        <div className={`text-center mb-16 transition-all duration-1000 ${mounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-          <div className="inline-flex items-center gap-2 bg-gradient-to-r from-orange-500 to-orange-600 text-white px-4 py-2 rounded-full text-sm font-semibold mb-6 animate-pulse-subtle">
+        <div className="text-center mb-16">
+          <div className="inline-flex items-center gap-2 bg-gradient-to-r from-orange-500 to-orange-600 text-white px-4 py-2 rounded-full text-sm font-semibold mb-6">
             <Sparkles className="w-4 h-4" />
             Industry Leadership
             <Sparkles className="w-4 h-4" />
           </div>
           
-          <h2 className="text-5xl md:text-6xl font-black mb-6 bg-gradient-to-r from-black via-black to-orange-600 bg-clip-text text-transparent animate-gradient-x">
-            Why <span className="text-orange-600">ThreatCure</span>?
+          {/* Fixed heading without animation that affects size */}
+          <h2 className="text-5xl md:text-6xl font-black mb-6">
+            Why <span className="bg-gradient-to-r from-black via-black to-orange-600 bg-clip-text text-transparent bg-fixed">ThreatCure</span>?
           </h2>
           
           <p className="text-xl text-gray-600 max-w-3xl mx-auto mb-12 leading-relaxed">
@@ -156,40 +156,37 @@ export default function WhyUsSection() {
         </div>
 
         {/* Stats Grid */}
-        <div className={`grid grid-cols-2 lg:grid-cols-4 gap-6 mb-20 transition-all duration-1000 delay-300 ${mounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 mb-20">
           {stats.map((stat, index) => {
             const StatIcon = stat.icon;
             return (
               <div
                 key={index}
-                className="group relative bg-white rounded-3xl p-8 shadow-xl hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 overflow-hidden"
+                className="group relative bg-white rounded-3xl p-8 shadow-xl hover:shadow-2xl overflow-hidden"
               >
                 {/* Gradient overlay on hover */}
-                <div className="absolute inset-0 bg-gradient-to-br from-orange-500 to-orange-600 opacity-0 group-hover:opacity-5 transition-opacity duration-500"></div>
+                <div className="absolute inset-0 bg-gradient-to-br from-orange-500 to-orange-600 opacity-0 group-hover:opacity-5 transition-opacity duration-300"></div>
                 
                 <div className="relative z-10 text-center">
-                  <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-orange-50 to-white mb-6 mx-auto group-hover:scale-110 transition-transform duration-500">
+                  <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-orange-50 to-white mb-6 mx-auto">
                     <StatIcon className={`w-8 h-8 ${stat.color}`} />
                   </div>
                   
-                  <div className="text-4xl font-black text-gray-900 mb-2 group-hover:text-orange-600 transition-colors duration-500">
+                  <div className="text-4xl font-black text-gray-900 mb-2">
                     {stat.value}
                   </div>
                   
-                  <p className="text-gray-600 font-medium group-hover:text-gray-800 transition-colors duration-500">
+                  <p className="text-gray-600 font-medium">
                     {stat.label}
                   </p>
                 </div>
-                
-                {/* Animated progress ring */}
-                <div className="absolute -bottom-4 -right-4 w-24 h-24 border-4 border-orange-100 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
               </div>
             );
           })}
         </div>
 
         {/* Features Section */}
-        <div className={`grid lg:grid-cols-2 gap-12 mb-16 transition-all duration-1000 delay-500 ${mounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+        <div className="grid lg:grid-cols-2 gap-12 mb-16">
           {/* Left Column - Feature Cards */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             {features.map((feature, index) => {
@@ -199,30 +196,24 @@ export default function WhyUsSection() {
               return (
                 <div
                   key={index}
-                  className={`group relative rounded-3xl p-6 cursor-pointer transition-all duration-500 overflow-hidden
-                    ${isActive ? 'shadow-2xl scale-105' : 'shadow-lg hover:shadow-xl hover:scale-105'}
-                    ${mounted ? 'opacity-100' : 'opacity-0'}
-                  `}
-                  style={{ 
-                    transitionDelay: `${index * 100}ms`,
-                  }}
+                  className={`group relative rounded-3xl p-6 cursor-pointer overflow-hidden shadow-lg min-h-[220px]`}
                   onClick={() => setActiveIndex(index)}
                   onMouseEnter={() => setActiveIndex(index)}
                 >
                   {/* Active indicator */}
                   {isActive && (
-                    <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-orange-500 to-orange-600 animate-pulse-subtle"></div>
+                    <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-orange-500 to-orange-600"></div>
                   )}
                   
                   {/* Background gradient on active */}
-                  <div className={`absolute inset-0 bg-gradient-to-br ${feature.color} opacity-0 ${isActive ? 'opacity-5' : 'group-hover:opacity-5'} transition-opacity duration-500`}></div>
+                  <div className={`absolute inset-0 bg-gradient-to-br ${feature.color} opacity-0 ${isActive ? 'opacity-5' : 'group-hover:opacity-5'} transition-opacity duration-300`}></div>
                   
                   {/* Base background */}
-                  <div className="absolute inset-0 bg-white transition-colors duration-500"></div>
+                  <div className="absolute inset-0 bg-white"></div>
 
                   <div className="relative z-10">
                     <div className="flex items-center gap-4 mb-4">
-                      <div className={`p-3 rounded-2xl bg-gradient-to-br ${feature.color} shadow-lg transition-transform duration-500 ${isActive ? 'scale-110' : 'group-hover:scale-110'}`}>
+                      <div className={`p-3 rounded-2xl bg-gradient-to-br ${feature.color} shadow-lg`}>
                         <FeatureIcon className="w-6 h-6 text-white" />
                       </div>
                       <h3 className="text-lg font-bold text-gray-900 flex-1">
@@ -234,8 +225,8 @@ export default function WhyUsSection() {
                       {feature.description}
                     </p>
                     
-                    {/* Details list - shows on hover/active */}
-                    <div className={`space-y-2 overflow-hidden transition-all duration-500 ${isActive ? 'max-h-40 opacity-100' : 'max-h-0 opacity-0'}`}>
+                    {/* Fixed height details - only opacity changes */}
+                    <div className={`space-y-2 ${isActive ? 'opacity-100' : 'opacity-0 h-0 overflow-hidden'}`}>
                       {feature.details.map((detail, idx) => (
                         <div key={idx} className="flex items-center gap-2 text-sm">
                           <CheckCircle className="w-4 h-4 text-orange-500" />
@@ -244,9 +235,6 @@ export default function WhyUsSection() {
                       ))}
                     </div>
                   </div>
-                  
-                  {/* Glow effect */}
-                  <div className={`absolute inset-0 rounded-3xl bg-gradient-to-r ${feature.color} opacity-0 ${isActive ? 'opacity-10 blur-xl' : ''} transition-all duration-500`}></div>
                 </div>
               );
             })}
@@ -268,7 +256,7 @@ export default function WhyUsSection() {
                       {features[activeIndex].title}
                     </h3>
                     <div className="flex items-center gap-2">
-                      <div className={`w-3 h-3 ${features[activeIndex].accentColor} rounded-full animate-pulse`}></div>
+                      <div className={`w-3 h-3 ${features[activeIndex].accentColor} rounded-full`}></div>
                       <span className="text-sm text-gray-600">Active Feature</span>
                     </div>
                   </div>
@@ -288,7 +276,7 @@ export default function WhyUsSection() {
                     {features[activeIndex].details.map((detail, idx) => (
                       <div 
                         key={idx}
-                        className="flex items-center gap-3 bg-white/50 p-3 rounded-xl border border-gray-200 hover:border-orange-300 transition-all duration-300"
+                        className="flex items-center gap-3 bg-white/50 p-3 rounded-xl border border-gray-200"
                       >
                         <div className={`p-2 rounded-lg ${features[activeIndex].accentColor} bg-opacity-10`}>
                           <TrendingUp className="w-4 h-4 text-orange-600" />
@@ -313,7 +301,7 @@ export default function WhyUsSection() {
                       </div>
                       <div className="flex items-center gap-4">
                         <div className="flex-1 h-2 bg-gray-200 rounded-full overflow-hidden">
-                          <div className={`h-full ${features[activeIndex].accentColor} rounded-full transition-all duration-1000`} style={{ width: '95%' }}></div>
+                          <div className={`h-full ${features[activeIndex].accentColor} rounded-full`} style={{ width: '95%' }}></div>
                         </div>
                         <div className="w-20 h-2 bg-gray-200 rounded-full overflow-hidden">
                           <div className="h-full bg-gray-400 rounded-full" style={{ width: '75%' }}></div>
@@ -322,39 +310,27 @@ export default function WhyUsSection() {
                     </div>
                   </div>
                 </div>
-
-                {/* CTA */}
-                <button className="group relative overflow-hidden bg-gradient-to-r from-orange-500 to-orange-600 text-white w-full py-3 rounded-xl font-semibold shadow-xl hover:shadow-2xl transition-all duration-500 flex items-center justify-center gap-3">
-                  <span className="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></span>
-                  <Shield className="w-5 h-5" />
-                  Learn More About This Feature
-                  <ArrowRight className="w-5 h-5 group-hover:translate-x-2 transition-transform duration-300" />
-                </button>
               </div>
-
-              {/* Floating Elements */}
-              <div className="absolute -top-6 -right-6 w-24 h-24 bg-gradient-to-br from-orange-500/10 to-orange-600/10 rounded-2xl -z-10 animate-float-delayed"></div>
-              <div className="absolute -bottom-6 -left-6 w-16 h-16 bg-gradient-to-br from-black/5 to-gray-800/5 rounded-2xl -z-10 animate-float-delayed-2"></div>
             </div>
           </div>
         </div>
 
         {/* Bottom CTA */}
-        <div className={`text-center transition-all duration-1000 delay-700 ${mounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+        <div className="text-center">
           <div className="inline-flex flex-col items-center gap-6 max-w-3xl mx-auto">
             <h3 className="text-2xl font-bold text-gray-900">
               Ready to Experience Enterprise-Grade Security?
             </h3>
             <div className="flex flex-wrap gap-4 justify-center">
-              <button className="group relative overflow-hidden bg-gradient-to-r from-orange-500 to-orange-600 text-white px-8 py-3 rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all duration-500 hover:-translate-y-1 flex items-center gap-3">
-                <span className="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></span>
+              <button className="group relative overflow-hidden bg-gradient-to-r from-orange-500 to-orange-600 text-white px-8 py-3 rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 flex items-center gap-3">
+                <span className="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-300"></span>
                 <Zap className="w-5 h-5" />
                 Start Free Trial
                 <ArrowRight className="w-5 h-5 group-hover:translate-x-2 transition-transform duration-300" />
               </button>
-              <button className="group relative overflow-hidden bg-white text-gray-900 px-8 py-3 rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all duration-500 border border-gray-300 hover:border-orange-300 flex items-center gap-3">
+              <button className="group relative overflow-hidden bg-white text-gray-900 px-8 py-3 rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-300 hover:border-orange-300 flex items-center gap-3">
                 <Users className="w-5 h-5 text-orange-600" />
-                Schedule a Demo
+               <Link href={"demo"}> Schedule a Demo</Link>
               </button>
             </div>
             <p className="text-sm text-gray-500 mt-4">
@@ -363,55 +339,6 @@ export default function WhyUsSection() {
           </div>
         </div>
       </div>
-
-      {/* Custom Animations */}
-      <style jsx>{`
-        @keyframes float {
-          0%, 100% { transform: translateY(0px); }
-          50% { transform: translateY(-20px); }
-        }
-        
-        @keyframes float-delayed {
-          0%, 100% { transform: translateY(0px) translateX(0px); }
-          50% { transform: translateY(-10px) translateX(10px); }
-        }
-        
-        @keyframes float-delayed-2 {
-          0%, 100% { transform: translateY(0px) translateX(0px); }
-          50% { transform: translateY(10px) translateX(-10px); }
-        }
-        
-        @keyframes gradient-x {
-          0%, 100% { background-position: 0% 50%; }
-          50% { background-position: 100% 50%; }
-        }
-        
-        @keyframes pulse-subtle {
-          0%, 100% { opacity: 1; }
-          50% { opacity: 0.8; }
-        }
-        
-        .animate-float {
-          animation: float 6s ease-in-out infinite;
-        }
-        
-        .animate-float-delayed {
-          animation: float-delayed 8s ease-in-out infinite;
-        }
-        
-        .animate-float-delayed-2 {
-          animation: float-delayed-2 7s ease-in-out infinite;
-        }
-        
-        .animate-gradient-x {
-          background-size: 200% auto;
-          animation: gradient-x 3s ease infinite;
-        }
-        
-        .animate-pulse-subtle {
-          animation: pulse-subtle 2s ease-in-out infinite;
-        }
-      `}</style>
     </section>
   );
 }

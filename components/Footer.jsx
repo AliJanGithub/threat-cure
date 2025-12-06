@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { 
   Shield, 
   Twitter, 
@@ -18,46 +18,68 @@ import {
   ChevronRight,
   Lock,
   Download,
-  Award
+  Award,
+  FileText,
+  AlertTriangle,
+  Users,
+  Cloud
 } from 'lucide-react';
+import Link from 'next/link';
 
 export default function Footer() {
-  const [mounted, setMounted] = useState(false);
   const [email, setEmail] = useState('');
   const [isSubscribed, setIsSubscribed] = useState(false);
 
   const footerLinks = {
+    services: [
+      { name: 'Managed Defense and Response', icon: ShieldCheck },
+      { name: 'Managed Cloud Attack Surface Management', icon: Cloud },
+      { name: 'SOC Maturity Assessment', icon: Award },
+      { name: 'ThreatCure Breach Response Service', icon: Shield },
+      { name: 'Cyber Threat Advisory', icon: AlertTriangle },
+      { name: 'Cyber Drill Exercise', icon: Users }
+    ],
+    blogs: [
+      { name: 'A Comprehensive Guide to Modern Security Operations Centers' },
+      { name: 'A Comprehensive Insight' },
+      { name: 'The Role of Managed SOC Services in Modern Cybersecurity' },
+      { name: 'Navigating the complex world of Data Security' },
+      { name: 'Cybersecurity Breaches – Report in last 10 years' },
+      { name: 'How ThreatCure\'s Managed Cloud ASM Safeguards Your Business' },
+      { name: 'Top Benefits of ThreatCure Breach Response Solution' },
+      { name: 'A Critical Analysis of the ThreatCure ShieldOps Platform' }
+    ],
     solutions: [
-      { name: 'AI-ShieldOps Platform', icon: Shield },
+      { name: 'AI-ShieldOps Platform solution', icon: Shield },
       { name: 'BASM-AI Platform', icon: Zap },
-      { name: 'Cloud Attack Surface Mgmt', icon: Globe },
-      { name: 'Threat Intelligence', icon: ShieldCheck },
-      { name: 'Compliance & Governance', icon: Award },
-      { name: 'Digital Forensics & IR', icon: Lock }
+      { name: 'Managed Cloud Attack Surface Management', icon: Cloud },
+      { name: 'ThreatCure Cyber Drill Practices', icon: Users }
     ],
-    company: [
-      { name: 'About ThreatCure', highlight: true },
-      { name: 'Leadership Team' },
-      { name: 'Careers', badge: 'We\'re hiring!' },
-      { name: 'Partners' },
-      { name: 'Press & Media' },
-      { name: 'Contact Sales' }
+    advisories: [
+      { name: 'FunSec Ransomware' },
+      { name: 'Windows LDAP RCE' },
+      { name: 'Mirai' },
+      { name: 'NetWalker' },
+      { name: 'Splunk Vulnerability' },
+      { name: 'AKIRA' },
+      { name: 'Hive' },
+      { name: 'RA World' },
+      { name: 'Fighting Ursa' },
+      { name: 'Water Hydra' },
+      { name: 'Grandoreiro Malware' },
+      { name: 'Lazarus Group' }
     ],
-    resources: [
-      { name: 'Blog & Insights' },
-      { name: 'Documentation' },
-      { name: 'Whitepapers', icon: Download },
-      { name: 'Case Studies' },
-      { name: 'Webinars' },
-      { name: 'API Reference' }
-    ],
-    legal: [
-      { name: 'Privacy Policy' },
-      { name: 'Terms of Service' },
-      { name: 'Cookie Policy' },
-      { name: 'Security Compliance' },
-      { name: 'Data Processing Addendum' },
-      { name: 'GDPR' }
+    threatActors: [
+      { name: 'FunSec Ransomware' },
+      { name: 'Mirai' },
+      { name: 'Hunters International' },
+      { name: 'Tick' },
+      { name: 'BianLian Ransomware' },
+      { name: 'LockBit 3.0 Ransomware' },
+      { name: 'MuddyWater Analysis Report by ThreatCure' },
+      { name: 'ThreatCure Analysis Report: Fighting Ursa' },
+      { name: 'Water Hydra' },
+      { name: 'Lazarus Group' }
     ]
   };
 
@@ -67,11 +89,6 @@ export default function Footer() {
     { icon: Github, href: '#', color: 'hover:bg-gray-800', label: 'GitHub' },
     { icon: Youtube, href: '#', color: 'hover:bg-red-600', label: 'YouTube' },
   ];
-
-  useEffect(() => {
-    const timer = setTimeout(() => setMounted(true), 100);
-    return () => clearTimeout(timer);
-  }, []);
 
   const handleSubscribe = (e) => {
     e.preventDefault();
@@ -103,7 +120,7 @@ export default function Footer() {
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Top Section - Newsletter & Quick Links */}
-        <div className={`grid lg:grid-cols-2 gap-12 mb-16 transition-all duration-1000 ${mounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+        <div className="grid lg:grid-cols-2 gap-12 mb-16">
           {/* Newsletter Subscription */}
           <div className="bg-gradient-to-br from-gray-800/50 to-black/50 rounded-3xl p-8 border border-gray-800/50 backdrop-blur-sm">
             <div className="flex items-center gap-3 mb-6">
@@ -183,8 +200,8 @@ export default function Footer() {
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <a 
-                href="tel:+15551234567"
+              <Link 
+                href="tel:+1-734-6371042"
                 className="group bg-gradient-to-br from-gray-800/50 to-black/50 rounded-xl p-6 border border-gray-800/50 hover:border-orange-500/50 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl"
               >
                 <div className="flex items-center gap-4">
@@ -192,26 +209,27 @@ export default function Footer() {
                     <Phone className="w-5 h-5 text-orange-500" />
                   </div>
                   <div>
-                    <div className="font-semibold text-white mb-1">Emergency Hotline</div>
-                    <div className="text-orange-500 font-bold">+1 (555) 123-4567</div>
+                    <div className="font-semibold text-white mb-1">USA Office</div>
+                    <div className="text-orange-500 font-bold">+1-(734)-6371042</div>
+                    <div className="text-orange-500 text-sm mt-1">+1-(734)-2186219</div>
                   </div>
                 </div>
-              </a>
+              </Link>
 
-              <a 
-                href="mailto:support@threatcure.com"
+              <Link 
+                href="tel:+92-021-34025367"
                 className="group bg-gradient-to-br from-gray-800/50 to-black/50 rounded-xl p-6 border border-gray-800/50 hover:border-orange-500/50 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl"
               >
                 <div className="flex items-center gap-4">
                   <div className="p-3 rounded-xl bg-gradient-to-br from-orange-500/20 to-orange-600/20 group-hover:scale-110 transition-transform duration-300">
-                    <Mail className="w-5 h-5 text-orange-500" />
+                    <Phone className="w-5 h-5 text-orange-500" />
                   </div>
                   <div>
-                    <div className="font-semibold text-white mb-1">Support Email</div>
-                    <div className="text-orange-500">support@threatcure.com</div>
+                    <div className="font-semibold text-white mb-1">Pakistan Office</div>
+                    <div className="text-orange-500 font-bold">+92-(021)-34025367</div>
                   </div>
                 </div>
-              </a>
+              </Link>
             </div>
 
             {/* Social Links */}
@@ -224,7 +242,7 @@ export default function Footer() {
                 {socialLinks.map((social, index) => {
                   const Icon = social.icon;
                   return (
-                    <a
+                    <Link
                       key={index}
                       href={social.href}
                       className={`group relative w-12 h-12 rounded-xl bg-gradient-to-br from-gray-800 to-black border border-gray-700 flex items-center justify-center transition-all duration-300 hover:-translate-y-1 ${social.color}`}
@@ -235,7 +253,7 @@ export default function Footer() {
                       <span className="absolute -top-8 left-1/2 transform -translate-x-1/2 bg-black text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">
                         {social.label}
                       </span>
-                    </a>
+                    </Link>
                   );
                 })}
               </div>
@@ -244,126 +262,157 @@ export default function Footer() {
         </div>
 
         {/* Main Footer Content */}
-        <div className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 mb-12 transition-all duration-1000 delay-300 ${mounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+        <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 mb-12">
           {/* Brand Column */}
           <div className="lg:col-span-2 space-y-6">
-            <div className="flex items-center gap-3">
-              <div className="relative">
-                <div className="p-3 rounded-2xl bg-gradient-to-br from-orange-500 to-orange-600 shadow-lg animate-pulse-subtle">
-                  <Shield className="w-8 h-8 text-white" />
+            <div className="space-y-4">
+              <div className="flex items-center gap-3">
+                <div className="relative">
+                  <div className="p-3 rounded-2xl bg-gradient-to-br from-orange-500 to-orange-600 shadow-lg animate-pulse-subtle">
+                    <Shield className="w-8 h-8 text-white" />
+                  </div>
+                  {/* <div className="absolute -top-1 -right-1 w-4 h-4 bg-green-500 rounded-full border-2 border-gray-900 animate-ping"></div> */}
                 </div>
-                <div className="absolute -top-1 -right-1 w-4 h-4 bg-green-500 rounded-full border-2 border-gray-900 animate-ping"></div>
+                <div>
+                  <h2 className="text-2xl font-black text-white">ThreatCure® Networks</h2>
+                  <p className="text-gray-400 text-sm">USA Headquarters</p>
+                </div>
               </div>
-              <div>
-                <h2 className="text-2xl font-black text-white">ThreatCure</h2>
-                <p className="text-gray-400 text-sm">Enterprise Security Platform</p>
+              
+              <div className="space-y-2">
+                <Link href="tel:+1-734-6371042" className="flex items-center gap-2 text-gray-400 hover:text-white transition-colors">
+                  <Phone className="w-4 h-4" />
+                  +1-(734)-6371042
+                </Link>
+                <Link href="tel:+1-734-2186219" className="flex items-center gap-2 text-gray-400 hover:text-white transition-colors">
+                  <Phone className="w-4 h-4" />
+                  +1-(734)-2186219
+                </Link>
+                <div className="flex items-start gap-2 text-gray-400">
+                  <MapPin className="w-4 h-4 mt-1 flex-shrink-0" />
+                  <span>41366 Northwind Drive, Canton, Michigan. USA</span>
+                </div>
               </div>
             </div>
 
-            <p className="text-gray-400 leading-relaxed">
-              Next-generation cybersecurity solutions powered by AI and expert intelligence. 
-              Protecting 500+ enterprises worldwide with 99.9% threat detection accuracy.
-            </p>
+            <div className="space-y-4 pt-6 border-t border-gray-800">
+              <h3 className="text-xl font-bold text-white">ThreatCure® Pvt. Ltd.</h3>
+              <div className="space-y-2">
+                <Link href="tel:+92-021-34025367" className="flex items-center gap-2 text-gray-400 hover:text-white transition-colors">
+                  <Phone className="w-4 h-4" />
+                  +92-(021)-34025367
+                </Link>
+                <div className="flex items-start gap-2 text-gray-400">
+                  <MapPin className="w-4 h-4 mt-1 flex-shrink-0" />
+                  <span>B-111, Block-7, Gulistan-e-Johar. Karachi, Pakistan.</span>
+                </div>
+              </div>
+            </div>
 
-            {/* Certifications */}
-            <div className="flex flex-wrap gap-3">
-              <div className="px-3 py-1.5 bg-gradient-to-r from-gray-800 to-black rounded-lg text-xs font-medium text-gray-300 border border-gray-700">
-                ISO 27001 Certified
-              </div>
-              <div className="px-3 py-1.5 bg-gradient-to-r from-gray-800 to-black rounded-lg text-xs font-medium text-gray-300 border border-gray-700">
-                SOC 2 Type II
-              </div>
-              <div className="px-3 py-1.5 bg-gradient-to-r from-gray-800 to-black rounded-lg text-xs font-medium text-gray-300 border border-gray-700">
-                GDPR Compliant
-              </div>
+            {/* Contact Info */}
+            <div className="pt-6 border-t border-gray-800">
+              <h3 className="text-white font-bold mb-4">Contact Info</h3>
+              <Link href="mailto:info@threatcure.net" className="flex items-center gap-2 text-gray-400 hover:text-white transition-colors mb-3">
+                <Mail className="w-4 h-4" />
+                info@threatcure.net
+              </Link>
             </div>
           </div>
 
-          {/* Solutions Column */}
+          {/* Services Column */}
           <div>
             <h3 className="text-white font-bold mb-6 flex items-center gap-2">
-              <Zap className="w-4 h-4 text-orange-500" />
-              Solutions
+              <ShieldCheck className="w-4 h-4 text-orange-500" />
+              Services
             </h3>
             <ul className="space-y-3">
-              {footerLinks.solutions.map((item, index) => {
+              {footerLinks.services.map((item, index) => {
                 const Icon = item.icon;
                 return (
                   <li key={index}>
-                    <a 
-                      href="#" 
+                    <Link 
+                      href="/services" 
                       className="group flex items-center gap-2 text-gray-400 hover:text-white text-sm transition-all duration-300 hover:translate-x-1"
                     >
                       <Icon className="w-3 h-3 text-orange-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                      <span>{item.name}</span>
-                      <ChevronRight className="w-3 h-3 ml-auto opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                    </a>
+                      <span className="flex-1">{item.name}</span>
+                      <ChevronRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                    </Link>
                   </li>
                 );
               })}
             </ul>
           </div>
 
-          {/* Company Column */}
-          <div>
-            <h3 className="text-white font-bold mb-6 flex items-center gap-2">
-              <Sparkles className="w-4 h-4 text-orange-500" />
-              Company
-            </h3>
-            <ul className="space-y-3">
-              {footerLinks.company.map((item, index) => (
-                <li key={index}>
-                  <a 
-                    href="#" 
-                    className={`group flex items-center justify-between text-sm transition-all duration-300 hover:translate-x-1
-                      ${item.highlight ? 'text-orange-400 hover:text-orange-300' : 'text-gray-400 hover:text-white'}
-                    `}
-                  >
-                    <span className="flex items-center gap-2">
-                      {item.name}
-                      {item.badge && (
-                        <span className="px-1.5 py-0.5 bg-gradient-to-r from-orange-500 to-orange-600 text-xs rounded">
-                          {item.badge}
-                        </span>
-                      )}
-                    </span>
-                    {item.highlight && <ChevronRight className="w-3 h-3" />}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Resources & Legal Columns */}
+          {/* Blogs & Solutions Columns */}
           <div className="space-y-8">
             <div>
-              <h3 className="text-white font-bold mb-6">Resources</h3>
+              <h3 className="text-white font-bold mb-6 flex items-center gap-2">
+                <FileText className="w-4 h-4 text-orange-500" />
+                Blogs
+              </h3>
               <ul className="space-y-3">
-                {footerLinks.resources.map((item, index) => (
+                {footerLinks.blogs.slice(0, 6).map((item, index) => (
                   <li key={index}>
-                    <a 
-                      href="#" 
-                      className="group flex items-center gap-2 text-gray-400 hover:text-white text-sm transition-all duration-300 hover:translate-x-1"
+                    <Link 
+                      href="/blogs" 
+                      className="group flex items-center justify-between text-gray-400 hover:text-white text-sm transition-all duration-300 hover:translate-x-1"
                     >
-                      {item.icon && <item.icon className="w-3 h-3" />}
-                      <span>{item.name}</span>
-                    </a>
+                      <span className="line-clamp-2">{item.name}</span>
+                      <ChevronRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex-shrink-0" />
+                    </Link>
                   </li>
                 ))}
               </ul>
             </div>
 
             <div>
-              <h3 className="text-white font-bold mb-6">Legal</h3>
+              <h3 className="text-white font-bold mb-6">Solutions</h3>
               <ul className="space-y-3">
-                {footerLinks.legal.map((item, index) => (
+                {footerLinks.solutions.map((item, index) => (
                   <li key={index}>
-                    <a 
+                    <Link 
+                      href="/solutions" 
+                      className="group flex items-center gap-2 text-gray-400 hover:text-white text-sm transition-all duration-300 hover:translate-x-1"
+                    >
+                      {item.icon && <item.icon className="w-3 h-3" />}
+                      <span>{item.name}</span>
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+
+          {/* Advisories & Threat Actors Columns */}
+          <div className="space-y-8">
+            <div>
+              <h3 className="text-white font-bold mb-6">Advisories</h3>
+              <ul className="space-y-3">
+                {footerLinks.advisories.slice(0, 6).map((item, index) => (
+                  <li key={index}>
+                    <Link 
                       href="#" 
-                      className="text-gray-400 hover:text-white text-sm transition-colors duration-300"
+                      className="text-gray-400 hover:text-white text-sm transition-colors duration-300 block hover:translate-x-1"
                     >
                       {item.name}
-                    </a>
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div>
+              <h3 className="text-white font-bold mb-6">Threat Actors Analysis</h3>
+              <ul className="space-y-3">
+                {footerLinks.threatActors.slice(0, 6).map((item, index) => (
+                  <li key={index}>
+                    <Link 
+                      href="/blogs" 
+                      className="text-gray-400 hover:text-white text-sm transition-colors duration-300 block hover:translate-x-1"
+                    >
+                      {item.name}
+                    </Link>
                   </li>
                 ))}
               </ul>
@@ -371,47 +420,21 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* Address & Bottom Bar */}
-        <div className={`space-y-8 pt-8 border-t border-gray-800/50 transition-all duration-1000 delay-500 ${mounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-          {/* Address Row */}
-          <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
-            <div className="flex items-center gap-4">
-              <div className="p-3 rounded-xl bg-gradient-to-br from-gray-800 to-black border border-gray-700">
-                <MapPin className="w-5 h-5 text-orange-500" />
-              </div>
-              <div>
-                <div className="text-white font-semibold">Global Headquarters</div>
-                <div className="text-gray-400 text-sm">
-                  123 Security Boulevard, Suite 500 • San Francisco, CA 94105 • United States
-                </div>
-              </div>
-            </div>
-
-            <div className="flex items-center gap-4">
-              <div className="text-right">
-                <div className="text-white font-semibold">Regional Offices</div>
-                <div className="text-gray-400 text-sm">London • Singapore • Sydney • Dubai</div>
-              </div>
-              <div className="w-8 h-8 rounded-full bg-gradient-to-br from-orange-500 to-orange-600 flex items-center justify-center">
-                <Globe className="w-4 h-4 text-white" />
-              </div>
-            </div>
-          </div>
-
-          {/* Bottom Bar */}
-          <div className="flex flex-col md:flex-row justify-between items-center gap-4 pt-8 border-t border-gray-800/50">
+        {/* Bottom Bar */}
+        <div className="space-y-8 pt-8 border-t border-gray-800/50">
+          <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             <div className="text-gray-500 text-sm">
-              © {currentYear} ThreatCure Technologies Inc. All rights reserved.
+              © {currentYear} ThreatCure®. All rights reserved.
             </div>
 
             <div className="flex items-center gap-6">
               <div className="flex items-center gap-2 text-gray-400 text-sm">
                 <ShieldCheck className="w-4 h-4 text-green-500" />
-                <span>Security verified • Trusted by Fortune 500</span>
+                <span>Enterprise Security Solutions</span>
               </div>
               <div className="hidden md:block w-px h-4 bg-gray-800"></div>
               <div className="text-gray-500 text-sm">
-                <span className="text-orange-500">✦</span> Securing digital futures since 2018
+                <span className="text-orange-500">✦</span> Advanced Threat Protection
               </div>
             </div>
           </div>
@@ -456,6 +479,13 @@ export default function Footer() {
         
         .animate-ping {
           animation: ping 2s cubic-bezier(0, 0, 0.2, 1) infinite;
+        }
+        
+        .line-clamp-2 {
+          display: -webkit-box;
+          -webkit-line-clamp: 2;
+          -webkit-box-orient: vertical;
+          overflow: hidden;
         }
       `}</style>
     </footer>

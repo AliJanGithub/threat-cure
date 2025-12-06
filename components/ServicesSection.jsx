@@ -69,6 +69,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import { Shield, Cloud, Zap, Target, Cpu, Lock, AlertTriangle, BarChart, Users, Globe, Brain, Sparkles, ArrowRight, CheckCircle } from 'lucide-react';
+import Link from "next/link";
 
 export default function ServicesSection() {
   const [mounted, setMounted] = useState(false);
@@ -78,8 +79,8 @@ export default function ServicesSection() {
   const services = [
     {
       icon: Cloud,
-      title: 'Cloud Security Management Services - CSMS',
-      description: 'Complete cloud security orchestration across AWS, Azure, and GCP with automated compliance checks, threat intelligence integration, and real-time monitoring.',
+      title: 'ThreatCure Managed Defense and Response',
+      description: 'Managed detection and response (MDR), a service that is outsourced, offers organization assistance in identifying threats and in responding to them after they have been identified. A human aspect is also present since security providers provide MDR clients access to their team of security researchers and engineers, who oversee keeping an eye on networks, examining occurrences, and reacting to security situations.',
       features: [
         'Multi-cloud Security Orchestration',
         'Automated Compliance Monitoring',
@@ -93,9 +94,9 @@ export default function ServicesSection() {
     },
     {
       icon: Zap,
-      title: 'Enhanced Threat Detection and Response',
-      subtitle: 'With ThreatCure Managed Defense and Response',
-      description: 'Advanced threat detection powered by AI and machine learning with automated response capabilities to neutralize threats before they impact your business.',
+      title: 'ThreatCure Cloud Security Management Services (CSMS)',
+      subtitle: '',
+      description: 'Businesses are switching from on-premises platforms to cloud, multi-cloud, or hybrid ones. Therefore, its crucial that cybersecurity professionals build the architecture of an organizations digital assets in a way that allows it to be flexible and in line with the environments rapid changes',
       features: [
         'AI-Powered Threat Detection',
         'Automated Incident Response',
@@ -109,9 +110,9 @@ export default function ServicesSection() {
     },
     {
       icon: Target,
-      title: 'Enhanced Cloud Environment Security',
-      subtitle: 'Through Detection Managed Cloud Attack Surface Management',
-      description: 'Continuous monitoring and management of your cloud attack surface with real-time vulnerability scanning and automated threat mitigation.',
+      title: 'ThreatCure Managed SOC Services',
+      subtitle: '',
+      description: 'In the ever-evolving digital landscape, threats are becoming more sophisticated and frequent. ThreatCures Managed Security Operations Center (SOC) services are designed to offer businesses a robust defense mechanism. We monitor, detect, and respond to these cyber threats, ensuring that your organization remains fortified against digital adversaries',
       features: [
         'Continuous Attack Surface Discovery',
         'Real-time Vulnerability Scanning',
@@ -125,9 +126,9 @@ export default function ServicesSection() {
     },
     {
       icon: Cpu,
-      title: 'Continuous Vulnerability and Risk Management',
-      subtitle: 'With ThreatCure',
-      description: 'Proactive vulnerability management with automated scanning, risk assessment, and remediation workflows to maintain optimal security posture.',
+      title: 'ThreatCure Breach Response Service (TBRS)',
+      subtitle: '',
+      description: 'Businesses are switching from on-premises platforms to cloud, multi-cloud, or hybrid ones. Therefore, its crucial that cybersecurity professionals build the architecture of an organizations digital assets in a way that allows it to be flexible and in line with the environments rapid changes',
       features: [
         'Automated Vulnerability Scanning',
         'Risk-based Prioritization',
@@ -141,8 +142,8 @@ export default function ServicesSection() {
     },
     {
       icon: Brain,
-      title: 'Threat Intelligence & AI Security',
-      description: 'Advanced threat intelligence platform with machine learning algorithms that predict and prevent emerging threats before they occur.',
+      title: 'ThreatCure Security Operation Center (SOC) Maturity Assessment',
+      description: 'It’s a SOC a responsibility to function efficiently and help the organization defend against cyber threats before they have a disruptive effect on the business. This is where functional maturity measurement plays its part.',
       features: [
         'Predictive Threat Intelligence',
         'Machine Learning Algorithms',
@@ -156,8 +157,8 @@ export default function ServicesSection() {
     },
     {
       icon: Lock,
-      title: 'Compliance & Governance Suite',
-      description: 'Comprehensive compliance management ensuring your organization meets all regulatory requirements across global standards.',
+      title: 'ThreatCure Cyber Drill Practices (CDP)',
+      description: 'In an era where cyber threats are evolving rapidly, it’s crucial for organizations to be well-prepared. At ThreatCure, we understand the importance of robust cybersecurity measures. One effective way to enhance an organizations cyber',
       features: [
         'Automated Compliance Scanning',
         'Audit Trail Management',
@@ -215,7 +216,7 @@ export default function ServicesSection() {
           </h2>
           
           <p className="text-xl text-gray-600 max-w-3xl mx-auto mb-8 leading-relaxed">
-            End-to-end cybersecurity services designed to protect your business from evolving threats across all attack surfaces
+           ThreatCure services provide best solutions to complex problems around the globe in cybersecurity domain.
           </p>
           
           <div className="flex items-center justify-center gap-3 text-sm text-gray-500">
@@ -252,7 +253,7 @@ export default function ServicesSection() {
                 <div className="absolute inset-0 bg-white transition-all duration-500 group-hover:bg-white/95"></div>
                 
                 {/* Animated Border */}
-                <div className="absolute inset-0 rounded-3xl p-[1px] bg-gradient-to-r from-transparent via-orange-500 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                <div className="absolute inset-0 rounded-3xl p-[1px] bg-gradient-to-r from-orange-500 via-orange-700 to-orange-500 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
                   <div className="absolute inset-0 rounded-3xl bg-white/95 group-hover:bg-transparent transition-colors duration-500"></div>
                 </div>
 
@@ -339,7 +340,7 @@ export default function ServicesSection() {
               </button>
               <button className="group relative overflow-hidden bg-white text-gray-900 px-8 py-3 rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all duration-500 border border-gray-300 hover:border-orange-300 flex items-center gap-3">
                 <Users className="w-5 h-5 text-orange-600" />
-                Contact Sales
+                <Link href={"contact"}>Contact Sales</Link>
               </button>
             </div>
           </div>

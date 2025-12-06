@@ -26,14 +26,12 @@ export default function HeroSection() {
       {/* Left Content */}
       <div className="flex-1 space-y-6">
         <h1 className="text-4xl md:text-5xl font-extrabold text-gray-900 leading-snug">
-          Next-Generation <br />
-          Cybersecurity for <br />
-          Modern Businesses
+          Re-Architect  <br />
+          Security Landscape  <br />
+          {/* Modern Businesses */}
         </h1>
         <p className="text-gray-700 text-lg md:text-xl">
-          Protect your digital assets with AI-powered threat detection, real-time monitoring, 
-          and expert security operations. Stay ahead of cyber threats with ThreatCure's 
-          comprehensive security platform.
+        Enhance your organization’s cybersecurity by utilizing the ThreatCure Artifical Intelligence (AI)-ShieldOps, Breach & Attack Simulation-AI (BASMAI) and the GuardianCare Services to address and mitigate the cybersecurity threats and improve SOC activities.
         </p>
 
         {/* Get Started Button */}
