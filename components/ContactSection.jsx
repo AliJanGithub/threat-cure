@@ -567,6 +567,7 @@
 
 import { useState } from 'react';
 import { MapPin, Phone, Mail, Send, Clock, Globe, Building, Sparkles, Shield, ArrowRight, ExternalLink } from 'lucide-react';
+import { PHP_API_URL } from '../lib/auth';
 
 export default function ContactSection() {
   const [formData, setFormData] = useState({
@@ -575,6 +576,7 @@ export default function ContactSection() {
     company: '',
     phone: '',
     message: '',
+    address:''
   });
 
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -599,27 +601,51 @@ export default function ContactSection() {
     hours: 'Monday - Saturday: 9:00 AM - 6:00 PM PST'
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setIsSubmitting(true);
+ const handleSubmit = async (e) => {
+  e.preventDefault();
+  setIsSubmitting(true);
 
-    setTimeout(() => {
-      setIsSubmitting(false);
+  try {
+  const response = await fetch(`${PHP_API_URL}/contact`, {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json",
+  },
+  body: JSON.stringify({
+    name: formData.name,
+    email: formData.email,
+    companyName: formData.company,   // map to PHP
+    address: formData.address,
+    phoneNumber: formData.phone,     // map to PHP
+    message: formData.message,
+  }),
+});
+
+
+    const result = await response.json();
+
+    if (result.success) {
       setIsSubmitted(true);
-      
       setFormData({
         name: '',
         email: '',
         company: '',
+        address: '',
         phone: '',
         message: '',
       });
 
-      setTimeout(() => {
-        setIsSubmitted(false);
-      }, 3000);
-    }, 1500);
-  };
+      setTimeout(() => setIsSubmitted(false), 3000);
+    } else {
+      alert("Failed: " + result);
+    }
+  } catch (error) {
+    alert("Server error: " + error.message);
+  }
+
+  setIsSubmitting(false);
+};
+
 
   const handleGetDirections = () => {
     const url = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(OFFICE_ADDRESS.formatted)}`;
@@ -721,6 +747,18 @@ export default function ContactSection() {
                   />
                 </div>
               </div>
+<div>
+  <label className="block text-sm font-semibold text-gray-700 mb-2">
+    Address
+  </label>
+  <input
+    type="text"
+    placeholder="Your Address"
+    value={formData.address}
+    onChange={(e) => setFormData({ ...formData, address: e.target.value })}
+    className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent hover:border-orange-400"
+  />
+</div>
 
               <div>
                 <label className="block text-sm font-semibold text-gray-700 mb-2">

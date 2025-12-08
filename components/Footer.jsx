@@ -25,6 +25,7 @@ import {
   Cloud
 } from 'lucide-react';
 import Link from 'next/link';
+import Image from 'next/image';
 
 export default function Footer() {
   const [email, setEmail] = useState('');
@@ -268,8 +269,10 @@ export default function Footer() {
             <div className="space-y-4">
               <div className="flex items-center gap-3">
                 <div className="relative">
-                  <div className="p-3 rounded-2xl bg-gradient-to-br from-orange-500 to-orange-600 shadow-lg animate-pulse-subtle">
-                    <Shield className="w-8 h-8 text-white" />
+                  <div className="p-3 rounded-2xl  shadow-lg animate-pulse-subtle">
+                    {/* <Shield className="w-8 h-8 text-white" /> */}
+                        <Image alt="logo" src={"/logowhite.png"} width={120} height={50} />
+
                   </div>
                   {/* <div className="absolute -top-1 -right-1 w-4 h-4 bg-green-500 rounded-full border-2 border-gray-900 animate-ping"></div> */}
                 </div>
