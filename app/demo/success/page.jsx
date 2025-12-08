@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from "react";
 import { Shield, Check, Sparkles, Clock } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
 import IdModalViewer from "../../../components/IdModalViewer"
+import Image from "next/image";
 
 export default function SuccessPage() {
   const [selectedSkills, setSelectedSkills] = useState([]);
@@ -162,10 +163,10 @@ export default function SuccessPage() {
           <div className={`flex items-center gap-3 mb-4 transition-all duration-700 ${mounted ? 'scale-100 opacity-100' : 'scale-95 opacity-0'}`}>
             <div className="bg-gradient-to-br from-orange-500 to-orange-600 p-3 rounded-xl shadow-lg animate-bounce-subtle relative group">
               <div className="absolute inset-0 bg-orange-400 rounded-xl blur-md opacity-50 group-hover:opacity-70 transition-opacity"></div>
-              <Shield className="text-white w-7 h-7 relative z-10" />
+              {/* <Shield className="text-white w-7 h-7 relative z-10" /> */}
             </div>
             <h1 className="text-4xl md:text-5xl font-extrabold bg-gradient-to-r from-black to-orange-600 bg-clip-text text-transparent tracking-tight animate-gradient-x">
-              ThreatCure
+               <Image alt="logo" src={"/logo.png"} width={160} height={50} />
             </h1>
           </div>
 
