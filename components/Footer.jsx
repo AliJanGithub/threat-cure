@@ -22,7 +22,9 @@ import {
   FileText,
   AlertTriangle,
   Users,
-  Cloud
+  Cloud,
+  Facebook,
+  Instagram
 } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -85,10 +87,10 @@ export default function Footer() {
   };
 
   const socialLinks = [
-    { icon: Twitter, href: '#', color: 'hover:bg-blue-500', label: 'Twitter' },
-    { icon: Linkedin, href: '#', color: 'hover:bg-blue-700', label: 'LinkedIn' },
-    { icon: Github, href: '#', color: 'hover:bg-gray-800', label: 'GitHub' },
-    { icon: Youtube, href: '#', color: 'hover:bg-red-600', label: 'YouTube' },
+    { icon: Twitter, href: 'https://x.com/ThreatCure_25', color: 'hover:bg-blue-500', label: 'Twitter' },
+    { icon: Linkedin, href: 'https://www.linkedin.com/company/threatcure-net/', color: 'hover:bg-blue-700', label: 'LinkedIn' },
+    { icon: Instagram, href: 'https://www.instagram.com/threat.cure/', color: 'hover:bg-gray-800', label: 'Instagram' },
+    { icon: Facebook, href: 'https://www.facebook.com/p/ThreatCure-61560184711818/', color: 'hover:bg-red-600', label: 'Facebook' },
   ];
 
   const handleSubscribe = (e) => {

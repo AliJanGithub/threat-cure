@@ -340,7 +340,7 @@ export default function ServicesSection() {
               </button>
               <button className="group relative overflow-hidden bg-white text-gray-900 px-8 py-3 rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all duration-500 border border-gray-300 hover:border-orange-300 flex items-center gap-3">
                 <Users className="w-5 h-5 text-orange-600" />
-                <Link href={"contact"}>Contact Sales</Link>
+                <Link href={"/contact"}>Contact Sales</Link>
               </button>
             </div>
           </div>

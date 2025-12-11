@@ -442,11 +442,11 @@ function ComparePasswordContent() {
                     <User className="w-3 h-3" /> Email
                   </label>
 <input
-  type={showPassword ? "text" : "password"}
-  value={formData.password}
-  onChange={(e) => setFormData({ ...formData, password: e.target.value })}
-  placeholder="Enter your password"
-  className={`w-full p-3 rounded-lg bg-white/20 text-white border ${errors.password ? 'border-red-500' : 'border-white/50'} focus:border-orange-400 outline-none pr-10 placeholder-gray-400`}
+  type={"email"}
+  value={formData.email}
+  onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+  placeholder="Enter your email"
+  className={`w-full p-3 rounded-lg bg-white/20 text-gray-500 border ${errors.email ? 'border-red-500' : 'border-white/50'} focus:border-orange-400 outline-none pr-10 placeholder-gray-400`}
   disabled={isLoading}
 />
 
@@ -465,7 +465,7 @@ function ComparePasswordContent() {
   value={formData.password}
   onChange={(e) => setFormData({ ...formData, password: e.target.value })}
   placeholder="Enter your password"
-  className={`w-full p-3 rounded-lg bg-white/20 text-white border border-amber-700 ${errors.password ? 'border-red-500' : 'border-white/40'} focus:border-orange-400 outline-none pr-10 placeholder-gray-400`}
+  className={`w-full p-3 rounded-lg bg-white/20 text-gray-500 border border-amber-700 ${errors.password ? 'border-red-500' : 'border-white/40'} focus:border-orange-400 outline-none pr-10 placeholder-gray-400`}
   disabled={isLoading}
 />
                     <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400">

@@ -7,22 +7,22 @@ import { useEffect, useState } from 'react';
 export default function ResourcesSection() {
   const router = useRouter();
   const [blogs, setBlogs] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    async function fetchRecentBlogs() {
-      try {
-        const response = await fetch('/api/blogs?limit=6');
-        const data = await response.json();
-        setBlogs(data);
-      } catch (error) {
-        console.error('Error fetching blogs:', error);
-      } finally {
-        setLoading(false);
-      }
-    }
+    // async function fetchRecentBlogs() {
+    //   try {
+    //     const response = await fetch('/api/blogs?limit=6');
+    //     const data = await response.json();
+        // setBlogs([]);
+    //   } catch (error) {
+    //     console.error('Error fetching blogs:', error);
+    //   } finally {
+    //     setLoading(false);
+    //   }
+    // }
     
-    fetchRecentBlogs();
+    // fetchRecentBlogs();
   }, []);
 
   const handleReadBlog = (slug) => {

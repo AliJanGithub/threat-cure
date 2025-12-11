@@ -15,7 +15,8 @@ export default function Navigation() {
     { name: "Services", href: "/services" },
     // { name: "Partner Net", href: "/partner-net" },
     { name: "Contact", href: "/contact" },
-    { name: "Blogs", href: "/blogs" },
+    { name: "Security Insights", href: "/blogs" },
+    {name :"AI Insights", href:"/ai-insights"}
   ];
 
   return (
@@ -80,17 +81,17 @@ export default function Navigation() {
             ))}
 
             <button className="border border-[#ff6b35] text-[#ff6b35] px-5 py-2 rounded-xl hover:bg-[#ff6b35] hover:text-white transition-all shadow-sm w-full">
-              <Link href={"/signin"} onClick={() => setMobileMenuOpen(false)}>
-                Sign In
+              <Link href={"/partner-net"} onClick={() => setMobileMenuOpen(false)}>
+                Partner Net
               </Link>
             </button>
-            <button className="bg-[#ff6b35] text-white px-6 py-2 rounded-xl hover:bg-[#ff5722] transition-all  cursor-pointer shadow-md w-full">
+            {/* <button className="bg-[#ff6b35] text-white px-6 py-2 rounded-xl hover:bg-[#ff5722] transition-all  cursor-pointer shadow-md w-full">
              <Link href={"/signup"} onClick={() => setMobileMenuOpen(false)}>
                 Sign Up
               </Link>
-            </button>
+            </button> */}
             <button className="bg-white border border-[#ff6b35] text-[#ff6b35] px-5 py-2 rounded-xl hover:bg-[#ff6b35] hover:text-white transition-all shadow-sm w-full">
-              Demo
+             <Link href={'/demo'}>Demo</Link> 
             </button>
           </div>
         )}

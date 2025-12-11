@@ -64,18 +64,20 @@ export default function TrustedPartnersSlider() {
   useEffect(() => {
     if (emblaApi && !scrollInterval) {
       const interval = setInterval(autoScroll, 1500);
-      setScrollInterval(interval);
+     setTimeout(()=> setScrollInterval(interval),300);
     }
     return () => scrollInterval && clearInterval(scrollInterval);
   }, [emblaApi, autoScroll, scrollInterval]);
 
   const partners = [
-    "/netflix.png",
-    "/micro.png",
-    "/fb.png",
-    "/netflix.png",
-    "/micro.png",
-    "/fb.png",
+    "/slider/cisco-seeklogo.png",
+     "/slider/compliance.jpg",
+    "/slider/hr.png",
+     "/slider/it.png",
+     "/slider/kpmg-seeklogo.png",
+     "/slider/splunk-technology-seeklogo.png",
+     "/slider/symantec-seeklogo.png",
+     "/slider/vecta.png",
   ];
 
   return (
@@ -88,7 +90,7 @@ export default function TrustedPartnersSlider() {
           {partners.concat(partners).map((logo, idx) => (
             <div
               key={idx}
-              className="flex-shrink-0 w-30 h-10 flex items-center justify-center bg-white rounded-xl shadow-md"
+              className="flex-shrink-0 w-30 h-16 flex items-center justify-center bg-white rounded-xl shadow-md"
             >
               <img src={logo} alt={`Partner ${idx}`} className="max-h-12 object-contain" />
             </div>

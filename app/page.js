@@ -17,11 +17,12 @@ export default function App() {
       <Navigation />
       
       <HeroSection />
+       <DetailedProjects/>
       <br/>
       <ServicesSection />
       <WhyUsSection />
       {/* <Projects/> */}
-      <DetailedProjects/>
+     
       <TrustedPartnersSlider/>
       <CaseStudiesSection />
 
