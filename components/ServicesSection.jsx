@@ -68,13 +68,23 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import { Shield, Cloud, Zap, Target, Cpu, Lock, AlertTriangle, BarChart, Users, Globe, Brain, Sparkles, ArrowRight, CheckCircle } from 'lucide-react';
+import { Shield, Cloud, Zap, Target, Cpu, Lock, BarChart, Users, Brain, Sparkles, ArrowRight, CheckCircle } from 'lucide-react';
 import Link from "next/link";
-
+import { useRouter } from "next/navigation";
 export default function ServicesSection() {
   const [mounted, setMounted] = useState(false);
   const [hoveredIndex, setHoveredIndex] = useState(null);
   const containerRef = useRef(null);
+  const router = useRouter();
+
+  const handleRequestDemo = (serviceTitle) => {
+    const params = new URLSearchParams({
+      category: "Services",
+      service: serviceTitle,
+      type: "service"
+    });
+    router.push(`/demo/quick?${params.toString()}`);
+  };
 
   const services = [
     {
@@ -90,7 +100,8 @@ export default function ServicesSection() {
       ],
       color: 'from-orange-500 to-orange-600',
       accentColor: 'bg-orange-500',
-      stats: '99.5% cloud security compliance'
+      stats: '99.5% cloud security compliance',
+      slug: 'mdr'
     },
     {
       icon: Zap,
@@ -106,7 +117,8 @@ export default function ServicesSection() {
       ],
       color: 'from-black to-gray-800',
       accentColor: 'bg-black',
-      stats: 'Average response time: 15 minutes'
+      stats: 'Average response time: 15 minutes',
+      slug: 'csms'
     },
     {
       icon: Target,
@@ -122,7 +134,8 @@ export default function ServicesSection() {
       ],
       color: 'from-gray-900 to-black',
       accentColor: 'bg-gray-900',
-      stats: 'Reduce attack surface by 73%'
+      stats: 'Reduce attack surface by 73%',
+      slug: 'soc'
     },
     {
       icon: Cpu,
@@ -138,7 +151,8 @@ export default function ServicesSection() {
       ],
       color: 'from-orange-600 to-orange-700',
       accentColor: 'bg-orange-600',
-      stats: '95% faster vulnerability remediation'
+      stats: '95% faster vulnerability remediation',
+      slug: 'tb'
     },
     {
       icon: Brain,
@@ -153,7 +167,8 @@ export default function ServicesSection() {
       ],
       color: 'from-black to-orange-900',
       accentColor: 'bg-black',
-      stats: '99.9% threat prediction accuracy'
+      stats: '99.9% threat prediction accuracy',
+      slug: 'soc-assessment'
     },
     {
       icon: Lock,
@@ -168,7 +183,8 @@ export default function ServicesSection() {
       ],
       color: 'from-gray-800 to-black',
       accentColor: 'bg-gray-800',
-      stats: '100% compliance assurance'
+      stats: '100% compliance assurance',
+      slug: 'cdp'
     }
   ];
 
@@ -301,17 +317,34 @@ export default function ServicesSection() {
 
                   {/* Stats and CTA */}
                   <div className="mt-auto pt-6 border-t border-gray-200 group-hover:border-orange-300 transition-colors duration-500">
-                    <div className="flex items-center justify-between">
+                    <div className="flex items-center justify-between mb-4">
                       <div className="flex items-center gap-3">
                         <div className={`w-3 h-3 ${service.accentColor} rounded-full animate-pulse`}></div>
                         <span className="font-semibold text-gray-900 transition-colors duration-500 group-hover:text-white">
                           {service.stats}
                         </span>
                       </div>
-                      <button className="flex items-center gap-2 text-orange-600 font-semibold transition-all duration-300 group-hover:text-white group-hover:gap-3">
-                        <span>Learn More</span>
-                        <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
+                    </div>
+                    <div className="flex gap-3">
+                      <button 
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleRequestDemo(service.title);
+                        }}
+                        className="flex-1 bg-gradient-to-r from-orange-500 to-orange-600 text-white px-4 py-2 rounded-lg font-semibold text-sm flex items-center justify-center gap-2 hover:from-orange-600 hover:to-orange-700 transition-all duration-300 group-hover:from-white group-hover:to-white group-hover:text-orange-600"
+                      >
+                        Request Demo
+                        <ArrowRight className="w-4 h-4" />
                       </button>
+                      <Link 
+                        href={`/services/${service.slug}`}
+                        onClick={(e) => e.stopPropagation()}
+                        className="px-4 py-2 rounded-lg font-semibold text-sm border border-gray-300 text-gray-700 hover:border-orange-500 hover:text-orange-600 transition-all duration-300 group-hover:border-white group-hover:text-white group-hover:hover:bg-white/20"
+                      >
+                        Learn More
+                      </Link>
+
+
                     </div>
                   </div>
                 </div>

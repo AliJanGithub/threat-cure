@@ -1,12 +1,23 @@
 "use client";
 
 import { useState, useRef } from "react";
-import { Shield, Brain, Zap, ArrowRight, Eye, Target, Cloud, Lock, Globe, BarChart, ShieldCheck, Sparkles, ChevronRight } from "lucide-react";
+import { Shield, Brain, Zap, ArrowRight, Eye, Cloud, BarChart, ShieldCheck, Sparkles, ChevronRight } from "lucide-react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 export default function DetailedProjects() {
   const [activeTab, setActiveTab] = useState(0);
   const containerRef = useRef(null);
+  const router = useRouter();
+
+  const handleRequestDemo = (projectTitle) => {
+    const params = new URLSearchParams({
+      category: "Platforms",
+      service: projectTitle,
+      type: "project"
+    });
+    router.push(`/demo/quick?${params.toString()}`);
+  };
 
   const services = [
     {
@@ -182,9 +193,20 @@ export default function DetailedProjects() {
 
               {/* CTA Buttons */}
               <div className="flex flex-wrap gap-4">
-                <button className="group relative overflow-hidden bg-white text-gray-900 px-8 py-4 rounded-xl font-semibold text-lg shadow-lg border border-gray-300 flex items-center gap-3">
+                <button 
+                  onClick={() => handleRequestDemo(services[activeTab].title)}
+                  className="group relative overflow-hidden bg-gradient-to-r from-orange-500 to-orange-600 text-white px-8 py-4 rounded-xl font-semibold text-lg shadow-lg flex items-center gap-3 hover:from-orange-600 hover:to-orange-700 transition-all duration-300"
+                >
+                  <Zap className="w-5 h-5" />
+                  Request Demo
+                  <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" />
+                </button>
+                <button 
+                  onClick={() => handleRequestDemo(services[activeTab].title)}
+                  className="group relative overflow-hidden bg-white text-gray-900 px-8 py-4 rounded-xl font-semibold text-lg shadow-lg border border-gray-300 flex items-center gap-3 hover:border-orange-500 hover:text-orange-600 transition-all duration-300"
+                >
                   <Eye className="w-5 h-5 text-orange-600" />
-                  <Link href={"demo"}>Request Free Trial</Link>  
+                  Request Free Trial
                 </button>
               </div>
             </div>

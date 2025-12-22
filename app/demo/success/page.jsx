@@ -1,4 +1,4 @@
-// "use client";
+"use client";
 
 // import { useState, useEffect, useRef } from "react";
 // import { Shield, Check, Sparkles, Clock } from "lucide-react";
@@ -551,7 +551,7 @@
 //     </Suspense>
 //   );
 // }
-"use client";
+
 
 import { useState, useEffect, useRef } from "react";
 import { Shield, Check, Sparkles, Clock } from "lucide-react";
@@ -559,8 +559,18 @@ import { useRouter, useSearchParams } from "next/navigation";
 import IdModalViewer from "../../../components/IdModalViewer";
 import Image from "next/image";
 import { PHP_API_URL } from "../../../lib/auth";
+// app/demo/success/page.jsx
+import { Suspense } from 'react'
+// import SuccessContent from './SuccessContent'
 
-export default function SuccessPage() {
+export default function page() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <SuccessPage />
+    </Suspense>
+  )
+}
+function SuccessPage() {
   const [selectedSkills, setSelectedSkills] = useState([]);
   const [decideLater, setDecideLater] = useState(false);
   const [mounted, setMounted] = useState(false);

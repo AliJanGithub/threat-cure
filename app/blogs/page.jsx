@@ -150,26 +150,42 @@
 //     </div>
 //   );
 // }
+// import { getAllBlogs } from './lib/blog-utils';
+// import BlogListingClient from './BlogListingClient';
+// import Navigation from '../../components/Navigation';
+
+// export default async function BlogsPage() {
+//   const blogs = await getAllBlogs();
+  
+//   // Debug log to check blog data structure
+//   console.log('Blogs data:', blogs.map(b => ({
+//     slug: b.slug,
+//     title: b.title,
+//     image: b.image,
+//     hasContent: !!b.content
+//   })));
+  
+//   return(
+//     <>
+//     <Navigation/>
+//     <BlogListingClient initialBlogs={blogs} />
+//     </>
+
+//   ) 
+// }
 import { getAllBlogs } from './lib/blog-utils';
+import { getAllPDFs } from './lib/pdf-utils';
 import BlogListingClient from './BlogListingClient';
 import Navigation from '../../components/Navigation';
 
 export default async function BlogsPage() {
   const blogs = await getAllBlogs();
-  
-  // Debug log to check blog data structure
-  console.log('Blogs data:', blogs.map(b => ({
-    slug: b.slug,
-    title: b.title,
-    image: b.image,
-    hasContent: !!b.content
-  })));
+  const pdfs = await getAllPDFs();
   
   return(
     <>
-    <Navigation/>
-    <BlogListingClient initialBlogs={blogs} />
+      <Navigation/>
+      <BlogListingClient initialBlogs={blogs} initialPDFs={pdfs} />
     </>
-
   ) 
 }

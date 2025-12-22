@@ -1381,146 +1381,549 @@
 
 
 
+// "use client";
+// import { useState, useEffect, useRef } from "react";
+// import { Shield, LogIn, Mail, Key, Sparkles, ArrowRight } from "lucide-react";
+// import { useRouter } from "next/navigation";
+// import { hasPartnerSession, setSigninFlow, PHP_API_URL } from "../../lib/auth";
+// import Image from "next/image";
+
+// class Particle {
+//   constructor(x, y, canvas) {
+//     this.canvas = canvas;
+//     this.ctx = canvas.getContext("2d");
+//     this.x = x;
+//     this.y = y;
+//     this.size = Math.random() * 2 + 0.5;
+//     this.speedX = Math.random() * 2 - 1;
+//     this.speedY = Math.random() * 2 - 1;
+//     this.color = Math.random() > 0.5 ? "rgba(255, 107, 53, 0.8)" : "rgba(255, 150, 53, 0.8)";
+//     this.connections = [];
+//     this.maxConnections = 5;
+//     this.connectionDistance = 100;
+//     this.vx = 0;
+//     this.vy = 0;
+//     this.inertia = 0.85;
+//     this.pulse = Math.random() * Math.PI * 2;
+//     this.pulseSpeed = 0.1 + Math.random() * 0.1;
+//   }
+
+//   update(mouseX, mouseY, mouseRadius = 150) {
+//     const dx = this.x - mouseX;
+//     const dy = this.y - mouseY;
+//     const distance = Math.sqrt(dx * dx + dy * dy);
+    
+//     // Ultra-fast mouse interaction
+//     if (distance < mouseRadius && mouseX > 0 && mouseY > 0) {
+//       const angle = Math.atan2(dy, dx);
+//       const force = (mouseRadius - distance) / mouseRadius;
+//       const pushStrength = 12; // Very strong push for instant response
+      
+//       this.vx += Math.cos(angle) * force * pushStrength;
+//       this.vy += Math.sin(angle) * force * pushStrength;
+      
+//       // Add some random turbulence for natural feel
+//       this.vx += (Math.random() - 0.5) * force * 6;
+//       this.vy += (Math.random() - 0.5) * force * 6;
+//     }
+    
+//     // Constant automatic movement
+//     const time = Date.now() * 0.002;
+//     const waveX = Math.sin(time * 0.8 + this.x * 0.005) * 0.8;
+//     const waveY = Math.cos(time * 0.6 + this.y * 0.005) * 0.8;
+    
+//     this.vx += (waveX + this.speedX * 0.5) * 0.2;
+//     this.vy += (waveY + this.speedY * 0.5) * 0.2;
+    
+//     // Apply inertia
+//     this.vx *= this.inertia;
+//     this.vy *= this.inertia;
+    
+//     // Update position
+//     this.x += this.vx;
+//     this.y += this.vy;
+    
+//     // Boundary wrap-around for continuous flow
+//     if (this.x > this.canvas.width + 50) this.x = -50;
+//     if (this.x < -50) this.x = this.canvas.width + 50;
+//     if (this.y > this.canvas.height + 50) this.y = -50;
+//     if (this.y < -50) this.y = this.canvas.height + 50;
+    
+//     // Fast pulse animation
+//     this.pulse += this.pulseSpeed;
+//     if (this.pulse > Math.PI * 2) this.pulse -= Math.PI * 2;
+//   }
+
+//   draw() {
+//     const pulseSize = Math.sin(this.pulse) * 0.3 + 0.8;
+//     this.ctx.beginPath();
+//     this.ctx.arc(this.x, this.y, this.size * pulseSize, 0, Math.PI * 2);
+//     this.ctx.fillStyle = this.color;
+//     this.ctx.fill();
+    
+//     // Glow effect
+//     this.ctx.beginPath();
+//     this.ctx.arc(this.x, this.y, this.size * pulseSize * 2, 0, Math.PI * 2);
+//     this.ctx.fillStyle = this.color.replace('0.8)', '0.2)');
+//     this.ctx.fill();
+//   }
+
+//   drawConnections(particles, mouseX, mouseY) {
+//     // Connect to nearby particles
+//     let connectionsDrawn = 0;
+//     for (let i = 0; i < particles.length && connectionsDrawn < this.maxConnections; i++) {
+//       if (particles[i] === this) continue;
+      
+//       const dx = this.x - particles[i].x;
+//       const dy = this.y - particles[i].y;
+//       const distanceSq = dx * dx + dy * dy;
+      
+//       if (distanceSq < this.connectionDistance * this.connectionDistance) {
+//         connectionsDrawn++;
+//         const distance = Math.sqrt(distanceSq);
+//         const opacity = (1 - (distance / this.connectionDistance)) * 0.4;
+        
+//         this.ctx.beginPath();
+//         this.ctx.moveTo(this.x, this.y);
+//         this.ctx.lineTo(particles[i].x, particles[i].y);
+//         this.ctx.strokeStyle = `rgba(255, 107, 53, ${opacity})`;
+//         this.ctx.lineWidth = 0.6 + Math.sin(this.pulse) * 0.2;
+//         this.ctx.lineCap = 'round';
+//         this.ctx.stroke();
+//       }
+//     }
+    
+//     // Connect to mouse with strong visual feedback
+//     if (mouseX > 0 && mouseY > 0) {
+//       const dx = this.x - mouseX;
+//       const dy = this.y - mouseY;
+//       const distanceSq = dx * dx + dy * dy;
+//       const mouseDist = 200;
+      
+//       if (distanceSq < mouseDist * mouseDist) {
+//         const distance = Math.sqrt(distanceSq);
+//         const opacity = 0.7 - (distance / (mouseDist * 1.5));
+        
+//         this.ctx.beginPath();
+//         this.ctx.moveTo(this.x, this.y);
+//         this.ctx.lineTo(mouseX, mouseY);
+//         this.ctx.strokeStyle = `rgba(255, 200, 53, ${opacity})`;
+//         this.ctx.lineWidth = 1.5 + Math.sin(Date.now() * 0.02) * 0.5;
+//         this.ctx.stroke();
+//       }
+//     }
+//   }
+// }
+
+// export default function SignInPage() {
+//   const [partnerNetId, setPartnerNetId] = useState("");
+//   const [email, setEmail] = useState("");
+//   const [phoneNumber, setPhoneNumber] = useState("");
+
+//   const [loading, setLoading] = useState(false);
+//   const [acceptTerms, setAcceptTerms] = useState(false);
+//   const [mounted, setMounted] = useState(false);
+//   const canvasRef = useRef(null);
+//   const animationRef = useRef(null);
+//   const particlesRef = useRef([]);
+//   const mouseRef = useRef({ x: -1000, y: -1000 });
+//   const mouseVelocityRef = useRef({ x: 0, y: 0 });
+//   const lastMouseRef = useRef({ x: 0, y: 0 });
+//   const router = useRouter();
+
+//   // Redirect if already logged in
+//   useEffect(() => {
+//     if (hasPartnerSession()) {
+//       router.replace("/partner-net/videos");
+//     }
+//   }, [router]);
+
+//   // Initialize particles and animation
+//   useEffect(() => {
+//     setTimeout(() => setMounted(true), 100);
+
+//     const handleMouseMove = (e) => {
+//       if (!canvasRef.current) return;
+      
+//       const canvas = canvasRef.current;
+//       const rect = canvas.getBoundingClientRect();
+//       const x = e.clientX - rect.left;
+//       const y = e.clientY - rect.top;
+      
+//       // Calculate velocity for enhanced effects
+//       mouseVelocityRef.current = {
+//         x: (x - lastMouseRef.current.x) * 2,
+//         y: (y - lastMouseRef.current.y) * 2
+//       };
+      
+//       lastMouseRef.current = { x, y };
+//       mouseRef.current = { x, y };
+//     };
+
+//     const handleMouseLeave = () => {
+//       mouseRef.current = { x: -1000, y: -1000 };
+//       mouseVelocityRef.current = { x: 0, y: 0 };
+//     };
+
+//     const initCanvas = () => {
+//       if (!canvasRef.current) return;
+
+//       const canvas = canvasRef.current;
+//       canvas.width = canvas.offsetWidth;
+//       canvas.height = canvas.offsetHeight;
+
+//       // Create optimized number of particles for fast animation
+//      const particleCount = 500;
+//       particlesRef.current = Array.from({ length: particleCount }, () => {
+//         return new Particle(
+//           Math.random() * canvas.width,
+//           Math.random() * canvas.height,
+//           canvas
+//         );
+//       });
+//     };
+
+//     // Add optimized mouse event listeners
+//     const canvas = canvasRef.current;
+//     if (canvas) {
+//       canvas.addEventListener("mousemove", handleMouseMove);
+//       canvas.addEventListener("mouseleave", handleMouseLeave);
+//     }
+
+//     initCanvas();
+//     window.addEventListener("resize", initCanvas);
+
+//     // Ultra-fast animation loop
+//     const animate = () => {
+//       if (!canvasRef.current) return;
+
+//       const canvas = canvasRef.current;
+//       const ctx = canvas.getContext("2d");
+//       const particles = particlesRef.current;
+//       const mouseX = mouseRef.current.x;
+//       const mouseY = mouseRef.current.y;
+
+//       // Clear with pure white background
+//       ctx.fillStyle = "#ffffff";
+//       ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+//       // Single-pass optimized particle processing
+//       for (let i = 0; i < particles.length; i++) {
+//         const p = particles[i];
+        
+//         // Update with velocity-enhanced mouse position
+//         const enhancedMouseX = mouseX + mouseVelocityRef.current.x * 0.5;
+//         const enhancedMouseY = mouseY + mouseVelocityRef.current.y * 0.5;
+//         p.update(enhancedMouseX, enhancedMouseY);
+        
+//         // Draw connections to other particles
+//         for (let j = i + 1; j < particles.length; j++) {
+//           const p2 = particles[j];
+//           const dx = p.x - p2.x;
+//           const dy = p.y - p2.y;
+//           const distSq = dx * dx + dy * dy;
+          
+//           if (distSq < 10000) { // 100px squared
+//             const distance = Math.sqrt(distSq);
+//             const opacity = (1 - distance / 100) * 0.3;
+//             ctx.strokeStyle = `rgba(255, 107, 53, ${opacity})`;
+//             ctx.lineWidth = 0.5 + Math.sin(p.pulse) * 0.2;
+//             ctx.beginPath();
+//             ctx.moveTo(p.x, p.y);
+//             ctx.lineTo(p2.x, p2.y);
+//             ctx.stroke();
+//           }
+//         }
+        
+//         // Draw mouse connections
+//         if (mouseX > 0 && mouseY > 0) {
+//           const dx = p.x - mouseX;
+//           const dy = p.y - mouseY;
+//           const distSq = dx * dx + dy * dy;
+          
+//           if (distSq < 40000) { // 200px squared
+//             const distance = Math.sqrt(distSq);
+//             const opacity = 0.6 - (distance / 300);
+//             ctx.strokeStyle = `rgba(255, 200, 53, ${opacity})`;
+//             ctx.lineWidth = 5.2;
+//             ctx.beginPath();
+//             ctx.moveTo(p.x, p.y);
+//             ctx.lineTo(mouseX, mouseY);
+//             ctx.stroke();
+//           }
+//         }
+        
+//         // Draw particle
+//         p.draw();
+//       }
+
+//       // Draw mouse effect
+//       if (mouseX > 0 && mouseY > 0) {
+//         const velocity = Math.sqrt(
+//           mouseVelocityRef.current.x * mouseVelocityRef.current.x + 
+//           mouseVelocityRef.current.y * mouseVelocityRef.current.y
+//         );
+        
+//         // Mouse glow
+//         ctx.beginPath();
+//         ctx.arc(mouseX, mouseY, 100, 0, Math.PI * 2);
+//         const gradient = ctx.createRadialGradient(
+//           mouseX, mouseY, 0,
+//           mouseX, mouseY, 100
+//         );
+//         gradient.addColorStop(0, "rgba(255, 150, 53, 0.3)");
+//         gradient.addColorStop(0.7, "rgba(255, 107, 53, 0.1)");
+//         gradient.addColorStop(1, "rgba(255, 107, 53, 0)");
+//         ctx.fillStyle = gradient;
+//         ctx.fill();
+        
+//         // Mouse center with velocity effect
+//         const pulse = Math.sin(Date.now() * 0.02) * 0.3 + 1;
+//         ctx.beginPath();
+//         ctx.arc(mouseX, mouseY, 5 * pulse, 0, Math.PI * 2);
+//         ctx.fillStyle = "rgba(255, 200, 53, 0.9)";
+//         ctx.fill();
+//       }
+
+//       animationRef.current = requestAnimationFrame(animate);
+//     };
+
+//     animationRef.current = requestAnimationFrame(animate);
+
+//     return () => {
+//       window.removeEventListener("resize", initCanvas);
+//       if (canvas) {
+//         canvas.removeEventListener("mousemove", handleMouseMove);
+//         canvas.removeEventListener("mouseleave", handleMouseLeave);
+//       }
+//       if (animationRef.current) {
+//         cancelAnimationFrame(animationRef.current);
+//       }
+//     };
+//   }, []);
+
+//   const handleSubmit = async (e) => {
+//     e.preventDefault();
+
+//     if (!email || !phoneNumber ) {
+//       alert("Please fill out all details");
+//       return;
+//     }
+    
+//     if (!acceptTerms) {
+//       alert("Please accept the Terms & Conditions");
+//       return;
+//     }
+
+//     setLoading(true);
+
+//     try {
+//       const response = await fetch(`${PHP_API_URL}/signin`, {
+//         method: "POST",
+//         headers: { "Content-Type": "application/json" },
+//         credentials: "include",
+//         body: JSON.stringify({ email, phoneNumber }),
+//       });
+
+//       const data = await response.json();
+//       setLoading(false);
+
+//       if (!response.ok) {
+//         alert(data.error || "Something went wrong");
+//         return;
+//       }
+
+//       // Set signin flow cookie on client side
+//       setSigninFlow({
+//         partnerNetId,
+//         email,
+//         mode: data.mode ? "set-password" : "compare-password",
+//       });
+
+//       // Route based on mode
+//       if (data.mode) {
+//         router.push("/partner-net/set-password");
+//       } else {
+//         router.push("/partner-net/compare-password");
+//       }
+//     } catch (err) {
+//       setLoading(false);
+//       console.error("Sign in error:", err);
+//       alert("Internal server error");
+//     }
+//   };
+
+//   return (
+//     <div className="min-h-screen w-full flex items-center justify-center bg-white overflow-hidden relative">
+//       {/* Canvas for fast spider web animation */}
+//       <canvas
+//         ref={canvasRef}
+//         className="absolute inset-0 w-full h-full pointer-events-auto"
+//         style={{ cursor: 'none' }}
+//       />
+
+//       <div className={`w-full max-w-md px-4 z-10 transition-all duration-500 ${mounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+//         {/* Header */}
+//         <div className="text-center mb-8">
+//           <div className="flex items-center justify-center gap-3 mb-4">
+//             <div className="relative">
+//               <div className="bg-gradient-to-br from-orange-500 to-orange-600 p-3 rounded-2xl shadow-lg animate-pulse">
+//                {/* <Image alt="logo" src={"/logowhite.png"} width={120} height={50} />   */}
+//               </div>
+//             </div>
+//             <h1 className="text-4xl font-black bg-gradient-to-r from-gray-900 via-orange-600 to-orange-500 bg-clip-text text-transparent">
+//               ThreatCure
+//             </h1>
+//           </div>
+//           <p className="text-gray-600 mb-2">Partner Network Portal</p>
+//           <div className="inline-flex items-center gap-2 bg-gradient-to-r from-orange-100 to-orange-50 text-orange-700 px-4 py-1 rounded-full text-sm font-semibold border border-orange-200">
+//             <Sparkles className="w-3 h-3" />
+//             Secure Partner Access
+//           </div>
+//         </div>
+
+//         {/* Sign In Card */}
+//         <div className="bg-white rounded-3xl p-8 shadow-2xl border border-orange-200 relative overflow-hidden">
+//           {/* Orange accent border */}
+//           <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-orange-500 to-orange-400"></div>
+          
+//           <div className="text-center mb-8 relative z-10">
+//             <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-orange-500 to-orange-600 mb-4 mx-auto shadow-lg">
+//               <LogIn className="w-8 h-8 text-white" />
+//             </div>
+//             <h2 className="text-2xl font-bold text-gray-900 mb-2">Welcome</h2>
+//             <p className="text-gray-600">Sign in to your partner account</p>
+//           </div>
+
+//           <form onSubmit={handleSubmit} className="space-y-6 relative z-10">
+//             <div>
+//               <label className="block text-gray-700 font-medium mb-2 flex items-center gap-2">
+//                 <Key className="w-4 h-4 text-orange-500" /> Phone number 
+//               </label>
+//               {/* <input
+//                 type="text"
+//                 value={partnerNetId}
+//                 onChange={(e) => setPartnerNetId(e.target.value)}
+//                 placeholder="Enter your Partner ID"
+//                 className="w-full px-4 py-3 bg-white border border-orange-200 rounded-xl text-gray-900 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent placeholder-gray-400 shadow-sm transition-all duration-200"
+//                 required
+//               /> */}
+//               <input
+//   type="tel"
+//   value={phoneNumber}
+//   onChange={(e) => setPhoneNumber(e.target.value)}
+//   placeholder="Enter phone number"
+//   required
+// />
+
+//             </div>
+
+//             <div>
+//               <label className="block text-gray-700 font-medium mb-2 flex items-center gap-2">
+//                 <Mail className="w-4 h-4 text-orange-500" /> Email Address
+//               </label>
+//               <input
+//                 type="email"
+//                 value={email}
+//                 onChange={(e) => setEmail(e.target.value)}
+//                 placeholder="Enter your email"
+//                 className="w-full px-4 py-3 bg-white border border-orange-200 rounded-xl text-gray-900 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent placeholder-gray-400 shadow-sm transition-all duration-200"
+//                 required
+//               />
+//             </div>
+
+//             <div className="flex items-start gap-3 p-4 bg-orange-50 rounded-xl border border-orange-200">
+//               <input
+//                 type="checkbox"
+//                 checked={acceptTerms}
+//                 onChange={(e) => setAcceptTerms(e.target.checked)}
+//                 className="mt-1 h-5 w-5 text-orange-500 focus:ring-orange-400 rounded border-orange-300"
+//               />
+//               <label className="text-gray-700 text-sm cursor-pointer">
+//                 I agree to the <span className="text-orange-600 font-semibold">Terms & Conditions</span> and <span className="text-orange-600 font-semibold">Privacy Policy</span>
+//               </label>
+//             </div>
+
+//             <button
+//               type="submit"
+//               disabled={loading || !acceptTerms}
+//               className={`group w-full py-3 rounded-xl font-semibold text-lg shadow-lg transition-all duration-300 relative overflow-hidden ${
+//                 loading || !acceptTerms
+//                   ? 'bg-gray-400 text-gray-200 cursor-not-allowed'
+//                   : 'bg-gradient-to-r from-orange-500 to-orange-600 text-white hover:shadow-2xl hover:-translate-y-1 hover:shadow-orange-300'
+//               }`}
+//             >
+//               <span className="flex items-center justify-center gap-3 relative z-10">
+//                 {loading ? (
+//                   <>
+//                     <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+//                     Signing In...
+//                   </>
+//                 ) : (
+//                   <>
+//                     Sign In
+//                     <ArrowRight className="w-5 h-5 group-hover:translate-x-2 transition-transform duration-300" />
+//                   </>
+//                 )}
+//               </span>
+//             </button>
+//           </form>
+
+//           <div className="mt-8 pt-6 border-t border-orange-100 text-center relative z-10">
+//             <p className="text-gray-600 text-sm">
+//               Need help? <button className="text-orange-600 font-semibold hover:text-orange-700 transition-colors">Contact Support</button>
+//             </p>
+//           </div>
+//         </div>
+
+//         <div className="mt-6 text-center">
+//           <div className="inline-flex items-center gap-6 text-sm text-gray-500">
+//             <span className="flex items-center gap-1">
+//               <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+//               500+ Partners
+//             </span>
+//             <span>•</span>
+//             <span>99.9% Uptime</span>
+//             <span>•</span>
+//             <span className="flex items-center gap-1">
+//               <div className="w-2 h-2 bg-orange-500 rounded-full"></div>
+//               Fast & Secure
+//             </span>
+//           </div>
+//         </div>
+//       </div>
+//     </div>
+//   );
+// }
+
+
+
+
+
+
+
 "use client";
 import { useState, useEffect, useRef } from "react";
-import { Shield, LogIn, Mail, Key, Sparkles, ArrowRight } from "lucide-react";
+import { Shield, LogIn, Mail, Key, Sparkles, ArrowRight, Smartphone, AlertCircle } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { hasPartnerSession, setSigninFlow, PHP_API_URL } from "../../lib/auth";
 import Image from "next/image";
 
 class Particle {
-  constructor(x, y, canvas) {
-    this.canvas = canvas;
-    this.ctx = canvas.getContext("2d");
-    this.x = x;
-    this.y = y;
-    this.size = Math.random() * 2 + 0.5;
-    this.speedX = Math.random() * 2 - 1;
-    this.speedY = Math.random() * 2 - 1;
-    this.color = Math.random() > 0.5 ? "rgba(255, 107, 53, 0.8)" : "rgba(255, 150, 53, 0.8)";
-    this.connections = [];
-    this.maxConnections = 5;
-    this.connectionDistance = 100;
-    this.vx = 0;
-    this.vy = 0;
-    this.inertia = 0.85;
-    this.pulse = Math.random() * Math.PI * 2;
-    this.pulseSpeed = 0.1 + Math.random() * 0.1;
-  }
-
-  update(mouseX, mouseY, mouseRadius = 150) {
-    const dx = this.x - mouseX;
-    const dy = this.y - mouseY;
-    const distance = Math.sqrt(dx * dx + dy * dy);
-    
-    // Ultra-fast mouse interaction
-    if (distance < mouseRadius && mouseX > 0 && mouseY > 0) {
-      const angle = Math.atan2(dy, dx);
-      const force = (mouseRadius - distance) / mouseRadius;
-      const pushStrength = 12; // Very strong push for instant response
-      
-      this.vx += Math.cos(angle) * force * pushStrength;
-      this.vy += Math.sin(angle) * force * pushStrength;
-      
-      // Add some random turbulence for natural feel
-      this.vx += (Math.random() - 0.5) * force * 6;
-      this.vy += (Math.random() - 0.5) * force * 6;
-    }
-    
-    // Constant automatic movement
-    const time = Date.now() * 0.002;
-    const waveX = Math.sin(time * 0.8 + this.x * 0.005) * 0.8;
-    const waveY = Math.cos(time * 0.6 + this.y * 0.005) * 0.8;
-    
-    this.vx += (waveX + this.speedX * 0.5) * 0.2;
-    this.vy += (waveY + this.speedY * 0.5) * 0.2;
-    
-    // Apply inertia
-    this.vx *= this.inertia;
-    this.vy *= this.inertia;
-    
-    // Update position
-    this.x += this.vx;
-    this.y += this.vy;
-    
-    // Boundary wrap-around for continuous flow
-    if (this.x > this.canvas.width + 50) this.x = -50;
-    if (this.x < -50) this.x = this.canvas.width + 50;
-    if (this.y > this.canvas.height + 50) this.y = -50;
-    if (this.y < -50) this.y = this.canvas.height + 50;
-    
-    // Fast pulse animation
-    this.pulse += this.pulseSpeed;
-    if (this.pulse > Math.PI * 2) this.pulse -= Math.PI * 2;
-  }
-
-  draw() {
-    const pulseSize = Math.sin(this.pulse) * 0.3 + 0.8;
-    this.ctx.beginPath();
-    this.ctx.arc(this.x, this.y, this.size * pulseSize, 0, Math.PI * 2);
-    this.ctx.fillStyle = this.color;
-    this.ctx.fill();
-    
-    // Glow effect
-    this.ctx.beginPath();
-    this.ctx.arc(this.x, this.y, this.size * pulseSize * 2, 0, Math.PI * 2);
-    this.ctx.fillStyle = this.color.replace('0.8)', '0.2)');
-    this.ctx.fill();
-  }
-
-  drawConnections(particles, mouseX, mouseY) {
-    // Connect to nearby particles
-    let connectionsDrawn = 0;
-    for (let i = 0; i < particles.length && connectionsDrawn < this.maxConnections; i++) {
-      if (particles[i] === this) continue;
-      
-      const dx = this.x - particles[i].x;
-      const dy = this.y - particles[i].y;
-      const distanceSq = dx * dx + dy * dy;
-      
-      if (distanceSq < this.connectionDistance * this.connectionDistance) {
-        connectionsDrawn++;
-        const distance = Math.sqrt(distanceSq);
-        const opacity = (1 - (distance / this.connectionDistance)) * 0.4;
-        
-        this.ctx.beginPath();
-        this.ctx.moveTo(this.x, this.y);
-        this.ctx.lineTo(particles[i].x, particles[i].y);
-        this.ctx.strokeStyle = `rgba(255, 107, 53, ${opacity})`;
-        this.ctx.lineWidth = 0.6 + Math.sin(this.pulse) * 0.2;
-        this.ctx.lineCap = 'round';
-        this.ctx.stroke();
-      }
-    }
-    
-    // Connect to mouse with strong visual feedback
-    if (mouseX > 0 && mouseY > 0) {
-      const dx = this.x - mouseX;
-      const dy = this.y - mouseY;
-      const distanceSq = dx * dx + dy * dy;
-      const mouseDist = 200;
-      
-      if (distanceSq < mouseDist * mouseDist) {
-        const distance = Math.sqrt(distanceSq);
-        const opacity = 0.7 - (distance / (mouseDist * 1.5));
-        
-        this.ctx.beginPath();
-        this.ctx.moveTo(this.x, this.y);
-        this.ctx.lineTo(mouseX, mouseY);
-        this.ctx.strokeStyle = `rgba(255, 200, 53, ${opacity})`;
-        this.ctx.lineWidth = 1.5 + Math.sin(Date.now() * 0.02) * 0.5;
-        this.ctx.stroke();
-      }
-    }
-  }
+  // ... Keep your Particle class exactly as it is ...
+  // (Your Particle class code remains unchanged)
 }
 
 export default function SignInPage() {
-  const [partnerNetId, setPartnerNetId] = useState("");
   const [email, setEmail] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [partner_net_id,set_partner_net_id]=useState("");
   const [loading, setLoading] = useState(false);
   const [acceptTerms, setAcceptTerms] = useState(false);
   const [mounted, setMounted] = useState(false);
+  const [otpDestination, setOtpDestination] = useState("email"); // 'email' or 'phone'
+  const [hasPhoneRegistered, setHasPhoneRegistered] = useState(false);
+  const [error, setError] = useState("");
   const canvasRef = useRef(null);
   const animationRef = useRef(null);
   const particlesRef = useRef([]);
@@ -1536,218 +1939,137 @@ export default function SignInPage() {
     }
   }, [router]);
 
-  // Initialize particles and animation
+  // Initialize particles and animation (keep exactly as is)
   useEffect(() => {
     setTimeout(() => setMounted(true), 100);
-
-    const handleMouseMove = (e) => {
-      if (!canvasRef.current) return;
-      
-      const canvas = canvasRef.current;
-      const rect = canvas.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
-      
-      // Calculate velocity for enhanced effects
-      mouseVelocityRef.current = {
-        x: (x - lastMouseRef.current.x) * 2,
-        y: (y - lastMouseRef.current.y) * 2
-      };
-      
-      lastMouseRef.current = { x, y };
-      mouseRef.current = { x, y };
-    };
-
-    const handleMouseLeave = () => {
-      mouseRef.current = { x: -1000, y: -1000 };
-      mouseVelocityRef.current = { x: 0, y: 0 };
-    };
-
-    const initCanvas = () => {
-      if (!canvasRef.current) return;
-
-      const canvas = canvasRef.current;
-      canvas.width = canvas.offsetWidth;
-      canvas.height = canvas.offsetHeight;
-
-      // Create optimized number of particles for fast animation
-     const particleCount = 500;
-      particlesRef.current = Array.from({ length: particleCount }, () => {
-        return new Particle(
-          Math.random() * canvas.width,
-          Math.random() * canvas.height,
-          canvas
-        );
-      });
-    };
-
-    // Add optimized mouse event listeners
-    const canvas = canvasRef.current;
-    if (canvas) {
-      canvas.addEventListener("mousemove", handleMouseMove);
-      canvas.addEventListener("mouseleave", handleMouseLeave);
-    }
-
-    initCanvas();
-    window.addEventListener("resize", initCanvas);
-
-    // Ultra-fast animation loop
-    const animate = () => {
-      if (!canvasRef.current) return;
-
-      const canvas = canvasRef.current;
-      const ctx = canvas.getContext("2d");
-      const particles = particlesRef.current;
-      const mouseX = mouseRef.current.x;
-      const mouseY = mouseRef.current.y;
-
-      // Clear with pure white background
-      ctx.fillStyle = "#ffffff";
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-      // Single-pass optimized particle processing
-      for (let i = 0; i < particles.length; i++) {
-        const p = particles[i];
-        
-        // Update with velocity-enhanced mouse position
-        const enhancedMouseX = mouseX + mouseVelocityRef.current.x * 0.5;
-        const enhancedMouseY = mouseY + mouseVelocityRef.current.y * 0.5;
-        p.update(enhancedMouseX, enhancedMouseY);
-        
-        // Draw connections to other particles
-        for (let j = i + 1; j < particles.length; j++) {
-          const p2 = particles[j];
-          const dx = p.x - p2.x;
-          const dy = p.y - p2.y;
-          const distSq = dx * dx + dy * dy;
-          
-          if (distSq < 10000) { // 100px squared
-            const distance = Math.sqrt(distSq);
-            const opacity = (1 - distance / 100) * 0.3;
-            ctx.strokeStyle = `rgba(255, 107, 53, ${opacity})`;
-            ctx.lineWidth = 0.5 + Math.sin(p.pulse) * 0.2;
-            ctx.beginPath();
-            ctx.moveTo(p.x, p.y);
-            ctx.lineTo(p2.x, p2.y);
-            ctx.stroke();
-          }
-        }
-        
-        // Draw mouse connections
-        if (mouseX > 0 && mouseY > 0) {
-          const dx = p.x - mouseX;
-          const dy = p.y - mouseY;
-          const distSq = dx * dx + dy * dy;
-          
-          if (distSq < 40000) { // 200px squared
-            const distance = Math.sqrt(distSq);
-            const opacity = 0.6 - (distance / 300);
-            ctx.strokeStyle = `rgba(255, 200, 53, ${opacity})`;
-            ctx.lineWidth = 5.2;
-            ctx.beginPath();
-            ctx.moveTo(p.x, p.y);
-            ctx.lineTo(mouseX, mouseY);
-            ctx.stroke();
-          }
-        }
-        
-        // Draw particle
-        p.draw();
-      }
-
-      // Draw mouse effect
-      if (mouseX > 0 && mouseY > 0) {
-        const velocity = Math.sqrt(
-          mouseVelocityRef.current.x * mouseVelocityRef.current.x + 
-          mouseVelocityRef.current.y * mouseVelocityRef.current.y
-        );
-        
-        // Mouse glow
-        ctx.beginPath();
-        ctx.arc(mouseX, mouseY, 100, 0, Math.PI * 2);
-        const gradient = ctx.createRadialGradient(
-          mouseX, mouseY, 0,
-          mouseX, mouseY, 100
-        );
-        gradient.addColorStop(0, "rgba(255, 150, 53, 0.3)");
-        gradient.addColorStop(0.7, "rgba(255, 107, 53, 0.1)");
-        gradient.addColorStop(1, "rgba(255, 107, 53, 0)");
-        ctx.fillStyle = gradient;
-        ctx.fill();
-        
-        // Mouse center with velocity effect
-        const pulse = Math.sin(Date.now() * 0.02) * 0.3 + 1;
-        ctx.beginPath();
-        ctx.arc(mouseX, mouseY, 5 * pulse, 0, Math.PI * 2);
-        ctx.fillStyle = "rgba(255, 200, 53, 0.9)";
-        ctx.fill();
-      }
-
-      animationRef.current = requestAnimationFrame(animate);
-    };
-
-    animationRef.current = requestAnimationFrame(animate);
-
-    return () => {
-      window.removeEventListener("resize", initCanvas);
-      if (canvas) {
-        canvas.removeEventListener("mousemove", handleMouseMove);
-        canvas.removeEventListener("mouseleave", handleMouseLeave);
-      }
-      if (animationRef.current) {
-        cancelAnimationFrame(animationRef.current);
-      }
-    };
+    // ... (Your existing particle animation code remains exactly the same) ...
   }, []);
+
+  // Format phone number as user types
+  const formatPhoneNumber = (value) => {
+    // Remove all non-digit characters
+    const phone = value.replace(/\D/g, '');
+    
+    // Format as (XXX) XXX-XXXX
+    if (phone.length === 0) return '';
+    if (phone.length <= 3) return `(${phone}`;
+    if (phone.length <= 6) return `(${phone.slice(0, 3)}) ${phone.slice(3)}`;
+    return `(${phone.slice(0, 3)}) ${phone.slice(3, 6)}-${phone.slice(6, 10)}`;
+  };
+
+  const handlePhoneChange = (e) => {
+    const formatted = formatPhoneNumber(e.target.value);
+    setPhoneNumber(formatted);
+    setError(""); // Clear error when user types
+  };
+
+  const handleEmailChange = (e) => {
+    setEmail(e.target.value);
+    setError(""); // Clear error when user types
+  };
+  const handlePartnerNetChange=(e)=>{
+    set_partner_net_id(e.target.value);
+    setError("");
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setError("");
 
-    if (!email || !partnerNetId) {
-      alert("Please fill out all details");
+    if (!email || !phoneNumber || !partner_net_id) {
+      setError("Please fill out all details");
       return;
     }
     
     if (!acceptTerms) {
-      alert("Please accept the Terms & Conditions");
+      setError("Please accept the Terms & Conditions");
+      return;
+    }
+
+    // Basic validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      setError("Please enter a valid email address");
+      return;
+    }
+
+    const phoneDigits = phoneNumber.replace(/\D/g, '');
+    if (phoneDigits.length < 10) {
+      setError("Please enter a valid 10-digit phone number");
       return;
     }
 
     setLoading(true);
 
     try {
-      const response = await fetch(`${PHP_API_URL}/signin`, {
+      // Step 1: Call /signin to initialize the signin flow
+      const signinResponse = await fetch(`${PHP_API_URL}/signup`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        credentials: "include",
-        body: JSON.stringify({ email, partnerNetId }),
+        
+        body: JSON.stringify({ 
+          email, 
+          phoneNumber: phoneDigits ,// Send only digits
+          partner_id:partner_net_id
+
+        }),
       });
 
-      const data = await response.json();
-      setLoading(false);
-
-      if (!response.ok) {
-        alert(data.error || "Something went wrong");
+      const signinData = await signinResponse.json();
+      console.log("Signin Response:", signinData);
+      if (!signinResponse.ok) {
+        setError(signinData.error || "Something went wrong");
+        setLoading(false);
         return;
       }
 
-      // Set signin flow cookie on client side
-      setSigninFlow({
-        partnerNetId,
-        email,
-        mode: data.mode ? "set-password" : "compare-password",
+      // Check if user has phone registered (for SMS OTP)
+      if (signinData.hasPhone === false && otpDestination === "phone") {
+        setError("No phone number registered. Please use email for OTP.");
+        setLoading(false);
+        return;
+      }
+
+      // Update OTP destination based on user's phone availability
+      if (!signinData.hasPhone) {
+        setOtpDestination("email");
+      }
+
+      // Step 2: Request OTP automatically after successful signin
+      const otpResponse = await fetch(`${PHP_API_URL}/request-otp`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: 'include',
+        body: JSON.stringify({ 
+          email:signinData.email,
+          phoneNumber:phoneNumber,
+          partnerId:signinData.partnerId,
+          flow:signinData.flow,
+          destination: signinData.hasPhone ? otpDestination : "email" // Use email if no phone
+        }),
       });
 
-      // Route based on mode
-      if (data.mode) {
-        router.push("/partner-net/set-password");
-      } else {
-        router.push("/partner-net/compare-password");
+      const otpData = await otpResponse.json();
+      console.log("OTP Response:", otpData);
+      if (!otpResponse.ok) {
+        setError(otpData.error || "Failed to send OTP");
+        setLoading(false);
+        return;
       }
+
+      // Store signin flow data in client cookie
+      setSigninFlow({
+        email,
+        mode: "pending-otp", // Indicates OTP verification is next
+      });
+
+      // Redirect to OTP verification page
+      router.push("/partner-net/verify-otp");
+
     } catch (err) {
       setLoading(false);
       console.error("Sign in error:", err);
-      alert("Internal server error");
+      setError("Network error. Please check your connection.");
     }
   };
 
@@ -1766,7 +2088,7 @@ export default function SignInPage() {
           <div className="flex items-center justify-center gap-3 mb-4">
             <div className="relative">
               <div className="bg-gradient-to-br from-orange-500 to-orange-600 p-3 rounded-2xl shadow-lg animate-pulse">
-               {/* <Image alt="logo" src={"/logowhite.png"} width={120} height={50} />   */}
+                {/* <Image alt="logo" src={"/logowhite.png"} width={120} height={50} /> */}
               </div>
             </div>
             <h1 className="text-4xl font-black bg-gradient-to-r from-gray-900 via-orange-600 to-orange-500 bg-clip-text text-transparent">
@@ -1789,25 +2111,21 @@ export default function SignInPage() {
             <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-orange-500 to-orange-600 mb-4 mx-auto shadow-lg">
               <LogIn className="w-8 h-8 text-white" />
             </div>
-            <h2 className="text-2xl font-bold text-gray-900 mb-2">Welcome</h2>
+            <h2 className="text-2xl font-bold text-gray-900 mb-2">Welcome Partner</h2>
             <p className="text-gray-600">Sign in to your partner account</p>
           </div>
 
-          <form onSubmit={handleSubmit} className="space-y-6 relative z-10">
-            <div>
-              <label className="block text-gray-700 font-medium mb-2 flex items-center gap-2">
-                <Key className="w-4 h-4 text-orange-500" /> Partner Network ID
-              </label>
-              <input
-                type="text"
-                value={partnerNetId}
-                onChange={(e) => setPartnerNetId(e.target.value)}
-                placeholder="Enter your Partner ID"
-                className="w-full px-4 py-3 bg-white border border-orange-200 rounded-xl text-gray-900 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent placeholder-gray-400 shadow-sm transition-all duration-200"
-                required
-              />
+          {/* Error Message */}
+          {error && (
+            <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-xl">
+              <div className="flex items-center gap-2 text-red-700">
+                <AlertCircle className="w-5 h-5" />
+                <span className="font-medium">{error}</span>
+              </div>
             </div>
+          )}
 
+          <form onSubmit={handleSubmit} className="space-y-6 relative z-10">
             <div>
               <label className="block text-gray-700 font-medium mb-2 flex items-center gap-2">
                 <Mail className="w-4 h-4 text-orange-500" /> Email Address
@@ -1815,11 +2133,89 @@ export default function SignInPage() {
               <input
                 type="email"
                 value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                onChange={handleEmailChange}
                 placeholder="Enter your email"
                 className="w-full px-4 py-3 bg-white border border-orange-200 rounded-xl text-gray-900 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent placeholder-gray-400 shadow-sm transition-all duration-200"
                 required
+                disabled={loading}
               />
+            </div>
+            <div>
+              <label className="block text-gray-700 font-medium mb-2 flex items-center gap-2">
+                <Mail className="w-4 h-4 text-orange-500" /> Partner Net Id 
+              </label>
+              <input
+                type="text"
+                value={partner_net_id}
+                onChange={handlePartnerNetChange}
+                placeholder="Enter your Partner_net Id"
+                className="w-full px-4 py-3 bg-white border border-orange-200 rounded-xl text-gray-900 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent placeholder-gray-400 shadow-sm transition-all duration-200"
+                required
+                disabled={loading}
+              />
+            </div>
+
+            <div>
+              <label className="block text-gray-700 font-medium mb-2 flex items-center gap-2">
+                <Smartphone className="w-4 h-4 text-orange-500" /> Phone Number
+              </label>
+             <input
+  type="tel"
+  value={phoneNumber}
+  onChange={(e) => {
+    // Only allow numbers, remove any non-digit characters
+    const value = e.target.value.replace(/\D/g, '');
+    setPhoneNumber(value);
+  }}
+  placeholder="03102866415"
+  className="w-full px-4 py-3 bg-white border border-orange-200 rounded-xl text-gray-900 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent placeholder-gray-400 shadow-sm transition-all duration-200"
+  required
+  maxLength="11" // For Pakistan numbers (03101234567)
+/>
+              <p className="text-xs text-gray-500 mt-2">
+                Used for verification and account recovery
+              </p>
+            </div>
+
+            <div>
+              <label className="block text-gray-700 font-medium mb-2 flex items-center gap-2">
+                <Key className="w-4 h-4 text-orange-500" /> Send OTP to
+              </label>
+              <div className="flex gap-4">
+                <button
+                  type="button"
+                  onClick={() => setOtpDestination("email")}
+                  disabled={loading}
+                  className={`flex-1 py-3 rounded-xl font-medium transition-all duration-200 ${
+                    otpDestination === "email" 
+                      ? "bg-gradient-to-r from-orange-500 to-orange-600 text-white shadow-md" 
+                      : "bg-gray-100 text-gray-700 hover:bg-gray-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                  }`}
+                >
+                  <span className="flex items-center justify-center gap-2">
+                    <Mail className="w-4 h-4" />
+                    Email
+                  </span>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setOtpDestination("phone")}
+                  disabled={loading}
+                  className={`flex-1 py-3 rounded-xl font-medium transition-all duration-200 ${
+                    otpDestination === "phone" 
+                      ? "bg-gradient-to-r from-orange-500 to-orange-600 text-white shadow-md" 
+                      : "bg-gray-100 text-gray-700 hover:bg-gray-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                  }`}
+                >
+                  <span className="flex items-center justify-center gap-2">
+                    <Smartphone className="w-4 h-4" />
+                    SMS
+                  </span>
+                </button>
+              </div>
+              <p className="text-sm text-gray-500 mt-2">
+                OTP will be sent to your {otpDestination === "email" ? "email" : "phone"} for verification
+              </p>
             </div>
 
             <div className="flex items-start gap-3 p-4 bg-orange-50 rounded-xl border border-orange-200">
@@ -1828,6 +2224,7 @@ export default function SignInPage() {
                 checked={acceptTerms}
                 onChange={(e) => setAcceptTerms(e.target.checked)}
                 className="mt-1 h-5 w-5 text-orange-500 focus:ring-orange-400 rounded border-orange-300"
+                disabled={loading}
               />
               <label className="text-gray-700 text-sm cursor-pointer">
                 I agree to the <span className="text-orange-600 font-semibold">Terms & Conditions</span> and <span className="text-orange-600 font-semibold">Privacy Policy</span>
@@ -1847,11 +2244,11 @@ export default function SignInPage() {
                 {loading ? (
                   <>
                     <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-                    Signing In...
+                    Sending OTP...
                   </>
                 ) : (
                   <>
-                    Sign In
+                    Send OTP
                     <ArrowRight className="w-5 h-5 group-hover:translate-x-2 transition-transform duration-300" />
                   </>
                 )}

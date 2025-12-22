@@ -2,8 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
 
-const blogsDirectory = path.join(process.cwd(), 'contents', 'blogs')
-
+const blogsDirectory = path.join(process.cwd(), 'public', 'contents', 'blogs');
 // Get all blog data for listing
 export async function getAllBlogs() {
   try {
@@ -127,7 +126,7 @@ export function getAllBlogSlugs() {
       };
     });
   } catch (error) {
-    console.error('Error getting blog slugs:', error);
+    console.error('Error getting blog slugs:    ', error);
     return [];
   }
 }
