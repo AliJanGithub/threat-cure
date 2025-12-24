@@ -237,14 +237,16 @@
 //   );
 // }
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { useRouter } from "next/navigation";
 import { Shield, Lock, Eye, EyeOff, CheckCircle, ArrowRight, Key, User, AlertCircle } from "lucide-react";
 import { getSigninFlow, setPartnerSession, clearSigninFlow, PHP_API_URL } from "../../../lib/auth";
 
 export default function SetPasswordPage() {
   const router = useRouter();
-  const signinFlow = getSigninFlow();
+  
+  // Memoize signinFlow to prevent unnecessary recreations
+  const signinFlow = useMemo(() => getSigninFlow(), []);
   
   const [formData, setFormData] = useState({ 
     email: '', 
@@ -252,6 +254,7 @@ export default function SetPasswordPage() {
     password: '', 
     confirmPassword: '' 
   });
+  
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -274,9 +277,11 @@ export default function SetPasswordPage() {
       return;
     }
 
-    // Pre-fill email from signin flow
-    setFormData(prev => ({ ...prev, email: signinFlow.email }));
-  }, [signinFlow, router]);
+    // Only update if email hasn't been set yet or is different
+    if (formData.email !== signinFlow.email) {
+      setFormData(prev => ({ ...prev, email: signinFlow.email }));
+    }
+  }, [signinFlow, router, formData.email]); // Add formData.email to dependencies
 
   // Password strength checker
   useEffect(() => {
@@ -288,10 +293,15 @@ export default function SetPasswordPage() {
         number: /[0-9]/.test(formData.password),
         special: /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(formData.password),
       });
+    } else {
+      // Reset password strength when password is empty
+      setPasswordStrength({
+        length: false, uppercase: false, lowercase: false, number: false, special: false,
+      });
     }
   }, [formData.password]);
 
-  // Validate form
+  // Rest of your code remains the same...
   const validateForm = () => {
     const newErrors = {};
     

@@ -378,7 +378,7 @@ function VideosContent() {
 
   const handleLogout = async () => {
     await logout();
-    router.replace("/partner-net");
+    router.replace("/");
   };
 
   const toggleTheme = () => {

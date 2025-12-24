@@ -35,8 +35,8 @@ const AdminLayout = ({ children }) => {
  
   const handleLogout = async () => {
     try {
-      await fetch(`${PHP_API_URL}/admin/logout`, { method: 'POST' });
-      router.push('/admin');
+      await fetch(`${PHP_API_URL}/admin/logout`, { method: 'POST',credentials: 'include' });
+      router.push('/');
     } catch (err) {
       console.error('Logout failed');
     }

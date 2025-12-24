@@ -524,14 +524,16 @@
 //   );
 // }
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { useRouter } from "next/navigation";
 import { getSigninFlow, setPartnerSession, clearSigninFlow, PHP_API_URL } from "../../../lib/auth";
 import { Shield, Lock, Eye, EyeOff, CheckCircle, ArrowRight, Key, AlertCircle, LogIn, User, Sparkles } from "lucide-react";
 
 export default function ComparePasswordPage() {
   const router = useRouter();
-  const signinFlow = getSigninFlow();
+  
+  // Memoize signinFlow to prevent it from being recreated on every render
+  const signinFlow = useMemo(() => getSigninFlow(), []);
   
   const [formData, setFormData] = useState({ email: '', password: '' });
   const [showPassword, setShowPassword] = useState(false);
@@ -559,8 +561,11 @@ export default function ComparePasswordPage() {
     }
 
     // Pre-fill email from signin flow (read-only)
-    setFormData(prev => ({ ...prev, email: signinFlow.email }));
-  }, [signinFlow, router]);
+    // Only update if the email hasn't been set yet or is different
+    if (formData.email !== signinFlow.email) {
+      setFormData(prev => ({ ...prev, email: signinFlow.email }));
+    }
+  }, [signinFlow, router, formData.email]); // Add formData.email to dependencies
 
   const validateForm = () => {
     const newErrors = {};
