@@ -2058,10 +2058,14 @@ export default function NewLogin() {
       }
 
       // Store signin flow data in client cookie
-      setSigninFlow({
-        email,
-        mode: "pending-otp", // Indicates OTP verification is next
-      });
+     setSigninFlow({
+  email: signinData.email,
+  partnerId: signinData.partnerId ?? partner_net_id,
+  phoneNumber: phoneDigits,
+  flow: signinData.flow,        // "signup" or "signin"
+  mode: "pending-otp",
+});
+
 
       // Redirect to OTP verification page
       router.push("/partner-net/verify-otp");

@@ -17,8 +17,9 @@ export default function VerifyOtpPage() {
   const [countdown, setCountdown] = useState(0);
   const [emailHint, setEmailHint] = useState("");
   const [phoneHint, setPhoneHint] = useState("");
+  const [otpflow,setOtpFlow]=useState("")
   const inputRefs = useRef([]);
-
+   console.log("signinflow",signinFlow)
   useEffect(() => {
   if (signinFlow?.email) {
     const parts = signinFlow.email.split('@');
@@ -82,7 +83,8 @@ export default function VerifyOtpPage() {
 
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "Failed to send OTP");
-
+    console.log("REQUEST  OTP",data)
+    setOtpFlow(data.flow)
       setDestination(dest);
       setMessage({
         text: `✅ OTP sent to ${data.hint}`,
@@ -163,7 +165,8 @@ export default function VerifyOtpPage() {
       });
       return;
     }
-
+     console.log(otpValue)
+     console.log("otp flow",otpflow)
     setLoading(true);
     setMessage({ text: "", type: "" });
 
@@ -174,13 +177,15 @@ export default function VerifyOtpPage() {
         credentials: "include",
         body: JSON.stringify({
           email: signinFlow.email,
+          flow:signinFlow.flow ?? 'signin',
+           partnerId: signinFlow.partnerId ?? null,
           otp: otpValue,
         }),
       });
 
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "OTP verification failed");
-
+     console.log(data)
       // ✅ OTP success - check what's next
       if (data.nextStep === "set-password") {
         // First time user - needs to set password
@@ -193,8 +198,9 @@ export default function VerifyOtpPage() {
         router.push("/partner-net/set-password");
       }
     } catch (err) {
+      console.log(err)
       setMessage({
-        text: `❌ ${err.message || "Invalid OTP. Please try again."}`,
+        text: `❌${err} ${err.message || "Invalid OTP. Please try again."}`,
         type: "error"
       });
       
